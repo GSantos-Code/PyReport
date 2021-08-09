@@ -7,6 +7,8 @@ class PyReport(utils.auxtools):
                 self.i= Tk()
                 self.i.config(bg="orange")
                 self.frame= Frame(self.i, bg="orange")
+                self.comment= "asd"
+                self.nome= "Gabriel Henrique"
                 self.frame.pack(pady="10px", padx="10px")
                 self.lb1= Label(self.frame, bg="orange",fg="white", text="Nome do paciente", font= "Arial 18 bold")
                 self.lb1.pack()
