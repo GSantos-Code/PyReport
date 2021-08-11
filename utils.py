@@ -182,7 +182,7 @@ class auxtools(object):
         if(texto0 == ""):
             texto= texto0
         else:
-            texto = "{comment}||"
+            texto = "{comment}|"
         texto= texto + "O Setup Virtual para <{Paciente}> foi realizado conforme suas instruções.||Modelos virtuais anexados mostram o resultado do setup virtual e poderão ser visualizados no software gratuito 3Shape Viewer.||"
         texto= texto + "<Poderá ser necessário refinamento após o término da movimentação ortodôntica em virtude da característica de alguns movimentos dentários solicitados, da complexidade do caso, da resposta biológica de cada paciente, do uso correto e contínuo do aparelho, da condução do tratamento, entre outros.>||"
         texto= texto + "O refinamento deverá ser solicitado através do e-mail &contato@compass3d.com.br# e novos modelos (ambas as arcadas) deverão ser enviados. Se optar por realizar nova moldagem, haverá necessidade de retirada dos attachments presentes para não ocorrer distorções nos modelos em gesso. Caso a opção seja o escaneamento intraoral, não há necessidade da retirada dos attachments.||"
@@ -252,28 +252,36 @@ class auxtools(object):
         self.pdf.setTitle("Relatório de Instruções")
         self.pdf.linkURL('mailto:contato@compass3d.com.br', self.coords, relative=1)
     def extenso(self,num):
-                if(int(num) == 0):
-                    if(num == self.sup or num == self.inf):
-                        return "-"
-                    else:
-                        return "zero"
                 listadef= {}
                 n= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,40,50,60,70,80,90,100]
                 nums= ["um","dois","Três","Quatro","Cinco","Seis","Sete","Oito","Nove","Dez","Onze",
                        "Doze","Treze","Quatorze","Quinze","Dezesseis","Dezessete","Dezoito","Dezenove",
                        "Vinte","Trinta","Quarenta","Cinquenta","Sessenta","Setenta","Oitenta","Noventa",
                        "Cem"]
+                if(int(num) == 0):
+                    if(num == self.sup or num == self.inf):
+                        return "-"
+                    else:
+                        return "zero"
                 for pp in range(0,len(n)):
                         listadef[n[pp]]= nums[pp]
                 if(int(num) in n):
                         return listadef[int(num)]
                 kk= ""
                 x=0
+                numstr= str(num)
+                total = int(self.sup) + int(self.inf)
                 if(int(num) > 100):
-                        kk += "Cento e"
-                        x += 1
-                try:
-                    kk = kk + listadef[int(num[x] + "0")] + " e " + listadef[int(num[x+1])]
-                except Exception:
-                    print(num)
+                        kk += "Cento e "
+                        numstr= numstr[1] + numstr[2]
+                if(int(num) > 10 and int(num) < 100 or total > 100):
+                        numstr= int(numstr)
+                        if(numstr in n):
+                            kk = kk + listadef[int(numstr)]
+                        else:
+                            numstr= str(numstr)
+                            dez= int(numstr[0] + "0")
+                            un= int(numstr[1])
+                            kk= kk + listadef[dez] + " e " + listadef[un]
+                #kk = kk + listadef[int(str(str(num[x]) + "0"))] + " e " + listadef[int(str(num[x+1]))]
                 return kk
