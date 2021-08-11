@@ -5,6 +5,7 @@ from tkinter import *
 class PyReport(utils.auxtools):
         def __init__(self, pdfname):
                 self.i= Tk()
+                self.validade= ""
                 self.i.config(bg="orange")
                 self.i.title("PyReport")
                 self.i.state("zoomed")
@@ -72,6 +73,7 @@ class PyReport(utils.auxtools):
                 S.config(command=T.yview)
                 T.config(yscrollcommand=S.set)
                 self.TextArea= T
+                self.scroll= S
                 self.btn.pack_forget()
                 self.btn= Button(self.frame2, relief= FLAT, text="Gerar PDF" ,font="Arial 20", bg="green", fg="white" ,command=self.step6)
                 self.btn.pack(pady="10px")
@@ -80,5 +82,17 @@ class PyReport(utils.auxtools):
                 self.comment= self.TextArea.get("1.0",END)
                 self.comment= self.comment.replace("\n","|")
                 self.clear()
+                if("Refino" in self.pacote or "Fase" in self.pacote):
+                        self.TextArea.pack_forget()
+                        self.scroll.pack_forget()
+                        self.lb2.pack_forget()
+                        self.lb1["text"] = "Texto da Validade"
+                        self.btn["text"]= "Pronto"
+                        self.btn["command"] = self.step7
+                else:
+                        self.i.destroy()
+        def step7(self):
+                self.validade= self.entrada1.get()
                 self.i.destroy()
+                
 x= PyReport("TESTE")

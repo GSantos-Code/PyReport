@@ -190,8 +190,45 @@ class auxtools(object):
         texto= texto + "Está indicado uso de attachments para maior controle do movimento dentário, para os elementos identificados abaixo:||"
         texto= texto + "Face Vestibular: <{v}>|Face Lingual: <{l}>|Face Oclusal: <{o}>||"
         texto= texto + "Os attachments deverão ser instalados com o guia correspondente para cada arcada, confeccionado em placa de acetato 0,3mm enviada para este fim, antes de iniciar o uso do primeiro alinhador OrthoAligner.||"
-        texto= texto + "Isto implica em mais <{att}> modelos prototipados (identificados como “0”) e os respectivos guias para instalação dos attachments.||Total de alinhadores: <{quant}({extenso})>.||O caso será tratado com um <OrthoAligner {pacote}>.||"
-        texto= texto + "Você poderá escolher o tipo de placa utilizada para o tratamento entre <Ultimate> e <FLX>.|As placas <Ultimate> são mais finas, mais confortáveis e mais resistentes a manchas.|As placas <FLX> possuem maior resistência, flexibilidade e forças mais constantes||."
+        texto= texto + "Isto implica em mais <{att}> modelos prototipados (identificados como “0”) e os respectivos guias para instalação dos attachments.||Total de alinhadores: <{quant}({extenso})>.||"
+        if("Refino" in self.pacote):
+            if(self.pacote == "Refino I"):
+                pass
+            else:
+                texto = texto + "<Tratado anteriormente com OrthoAligner Refino "
+                if(self.pacote == "Refino II"):
+                    texto= texto + "I."
+                elif(self.pacote == "Refino III"):
+                    texto= texto + "I, II."
+                elif(self.pacote == "Refino IV"):
+                    texto= texto + "I, II, III."
+                elif(self.pacote == "Refino V"):
+                    texto= texto + "I, II, III, IV."
+                elif(self.pacote == "Refino VI"):
+                    texto= texto + "I, II, III, IV, V."
+                texto= texto + ">|"
+
+        if("Fase" in self.pacote):
+            if(self.pacote == "Fase I"):
+                pass
+            else:
+                texto = texto + "<Tratado anteriormente com OrthoAligner Fase "
+                if(self.pacote == "Fase II"):
+                    texto= texto + "I."
+                elif(self.pacote == "Fase III"):
+                    texto= texto + "I, II."
+                elif(self.pacote == "Fase IV"):
+                    texto= texto + "I, II, III."
+                elif(self.pacote == "Fase V"):
+                    texto= texto + "I, II, III, IV."
+                elif(self.pacote == "Fase VI"):
+                    texto= texto + "I, II, III, IV, V."
+                texto= texto + ">|"
+                
+        texto= texto + "O caso será tratado com um <OrthoAligner {pacote}>.|"
+        if(self.validade != ""):
+            texto= texto + "<" + self.validade + ">|"
+        texto= texto + "|Você poderá escolher o tipo de placa utilizada para o tratamento entre <Ultimate> e <FLX>.|As placas <Ultimate> são mais finas, mais confortáveis e mais resistentes a manchas.|As placas <FLX> possuem maior resistência, flexibilidade e forças mais constantes||."
         texto= texto + "Além disso, você também pode optar pelo <recorte padrão> (corte reto, 2mm acima da margem gengival) ou <recorte cervical> com contorno gengival.||"
         texto= texto + "Lembrando que a escolha das placas e do recorte deve ser baseada na experiência do profissional e em especial no caso a ser tratado.||"
         texto= texto + "<Verifique com o seu consultor com relação aos custos do pacote indicado, placas e recorte escolhido.>||£"
