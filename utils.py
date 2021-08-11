@@ -20,7 +20,7 @@ class auxtools(object):
             os.mkdir("output")
         except Exception:
             pass
-        self.pdf= canvas.Canvas("output/" + pdfname + ".pdf", verbosity= 1, bottomup= 0)
+        self.pdf= canvas.Canvas("output/14.pdf", verbosity= 1, bottomup= 0)
         self.pdf.setPageSize((596,842))
         self.pdf.setTitle(pdfname)
         self.Header()
@@ -172,7 +172,7 @@ class auxtools(object):
         self.pdf.setFillColorRGB(0,0,0)
         self.pdf.drawString(40,200, "Prezado")
         self.pdf.setFont("Helvetica-Bold",13)
-        self.pdf.drawString(96,200, "Dr(a) " + self.nome)
+        self.pdf.drawString(96,200, "Dr(a) " + self.dentista)
         self.pdf.setFont("Helvetica",13)
         x= 40
         y= 230
@@ -188,7 +188,7 @@ class auxtools(object):
         texto= texto + "O refinamento deverá ser solicitado através do e-mail &contato@compass3d.com.br# e novos modelos (ambas as arcadas) deverão ser enviados. Se optar por realizar nova moldagem, haverá necessidade de retirada dos attachments presentes para não ocorrer distorções nos modelos em gesso. Caso a opção seja o escaneamento intraoral, não há necessidade da retirada dos attachments.||"
         texto= texto + "Para realizar a etapa inicial do presente planejamento, serão necessários:||Alinhadores Superiores: <{sup}>|Alinhadores Inferiores: <{inf}>||"
         texto= texto + "Está indicado uso de attachments para maior controle do movimento dentário, para os elementos identificados abaixo:||"
-        texto= texto + "Face Vestibular: {v}|Face Lingual: {l}|Face Oclusal: {o}||"
+        texto= texto + "Face Vestibular: <{v}>|Face Lingual: <{l}>|Face Oclusal: <{o}>||"
         texto= texto + "Os attachments deverão ser instalados com o guia correspondente para cada arcada, confeccionado em placa de acetato 0,3mm enviada para este fim, antes de iniciar o uso do primeiro alinhador OrthoAligner.||"
         texto= texto + "Isto implica em mais <{att}> modelos prototipados (identificados como “0”) e os respectivos guias para instalação dos attachments.||Total de alinhadores: <{quant}({extenso})>.||O caso será tratado com um <OrthoAligner {pacote}>.||"
         texto= texto + "Você poderá escolher o tipo de placa utilizada para o tratamento entre <Ultimate> e <FLX>.|As placas <Ultimate> são mais finas, mais confortáveis e mais resistentes a manchas.|As placas <FLX> possuem maior resistência, flexibilidade e forças mais constantes||."
@@ -202,17 +202,27 @@ class auxtools(object):
         texto= texto + "A contenção pós tratamento deverá ser instalada após o uso do último alinhador.||"
         texto= texto + "<Informamos que caso seja solicitada a alteração do setup, iremos acrescentar mais (2) dois dias úteis no prazo de entrega do planejamento para o envio do mesmo.>||"
         texto= texto + "<{ortodont}>|Compass3D§"
-        print(self.comment,self.sup,self.inf,self.paciente,self.ortodont,self.vest,self.lin,self.ocl)
-        texto= texto.format(comment= texto0,Paciente= self.paciente,sup=self.extenso(self.sup),inf=self.extenso(self.inf),v=self.vest,l=self.lin,o=self.ocl,att=self.extenso(self.att),quant=self.sup + self.inf,extenso=self.extenso(self.sup + self.inf),pacote=self.pacote,ortodont=self.ortodont)
+        if(self.sup == ""):
+            self.sup = "0"
+        if(self.inf == ""):
+            self.inf= "0"
+        texto= texto.format(comment= texto0,Paciente= self.paciente,sup=self.extenso(self.sup),inf=self.extenso(self.inf),v=self.vest,l=self.lin,o=self.ocl,att=self.extenso(str(self.att)),quant=int(self.sup) + int(self.inf) + self.att,extenso=self.extenso(int(self.sup) + int(self.inf) + self.att),pacote=self.pacote,ortodont=self.ortodont)
         self.bl2.setTextOrigin(int(x),int(y))
         self.coords = [0,0,0,0]
         self.write(texto)
         self.rodape()
+        self.pdf.setAuthor("Compass3D")
+        self.pdf.setTitle("Relatório de Instruções")
         self.pdf.linkURL('mailto:contato@compass3d.com.br', self.coords, relative=1)
     def extenso(self,num):
+                if(int(num) == 0):
+                    if(num == self.sup or num == self.inf):
+                        return "-"
+                    else:
+                        return "zero"
                 listadef= {}
                 n= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,40,50,60,70,80,90,100]
-                nums= ["Um","Dois","Três","Quatro","Cinco","Seis","Sete","Oito","Nove","Dez","Onze",
+                nums= ["um","dois","Três","Quatro","Cinco","Seis","Sete","Oito","Nove","Dez","Onze",
                        "Doze","Treze","Quatorze","Quinze","Dezesseis","Dezessete","Dezoito","Dezenove",
                        "Vinte","Trinta","Quarenta","Cinquenta","Sessenta","Setenta","Oitenta","Noventa",
                        "Cem"]
@@ -225,5 +235,8 @@ class auxtools(object):
                 if(int(num) > 100):
                         kk += "Cento e"
                         x += 1
-                kk = kk + listadef[int(num[x] + "0")] + " e " + listadef[int(num[x+1])]
+                try:
+                    kk = kk + listadef[int(num[x] + "0")] + " e " + listadef[int(num[x+1])]
+                except Exception:
+                    print(num)
                 return kk
