@@ -8,6 +8,8 @@ class auxtools(object):
     def __init__(self, pdfname):
         self.width= 596
         self.fim= 0
+        self.util= [0,0]
+        self.tablesp= 0
         self.enter= 0
         self.aux= 0
         self.qp= 0
@@ -40,10 +42,16 @@ class auxtools(object):
         self.pdf.setStrokeColorRGB(0,0,0)
         self.pdf.drawCentredString(self.width/2,130,"Relatório de Setup Virtual")
     def write(self,texto):
-        if(self.enter == 1):
+        if(self.enter == 1 and self.tablesp == 0):
             fcpy= self.bl2._fontname
             self.bl2= self.pdf.beginText()
             self.bl2.setTextOrigin(40,50)
+            self.bl2.setFont(fcpy,13)
+            self.enter= 0
+        elif(self.tablesp == 1):
+            fcpy= self.bl2._fontname
+            self.bl2= self.pdf.beginText()
+            self.bl2.setTextOrigin(self.util[0],self.util[1])
             self.bl2.setFont(fcpy,13)
             self.enter= 0
         for line in texto:
@@ -63,7 +71,7 @@ class auxtools(object):
                     pass
                 elif(line == ">"):
                     self.bl2.setFont("Helvetica",13)
-                elif(line == "%"):
+                elif(line == "£"):
                     self.bl2.textLine()
                     (x,y) = self.bl2.getCursor()
                     if(y + 200 >= 714):
@@ -117,6 +125,10 @@ class auxtools(object):
                     self.pdf.linkURL("mailto:contato@compass3d.com.br",self.coords, relative=1)
                     self.pdf.setFont("Helvetica",13)
                     self.pdf.setStrokeColorRGB(1,1,1)
+                    if(self.pagebreak == 1):
+                        self.tablesp= 1
+                        self.util[0]= 40
+                        self.util[1] = l+60
                 elif(line == "&"):
                     self.coords[0]= x
                     self.coords[1]= y
@@ -164,7 +176,7 @@ class auxtools(object):
         self.pdf.setFont("Helvetica",13)
         x= 40
         y= 230
-        texto0= ""
+        texto0= self.comment
         x= 40
         self.bl2= self.pdf.beginText()
         if(texto0 == ""):
@@ -182,7 +194,7 @@ class auxtools(object):
         texto= texto + "Você poderá escolher o tipo de placa utilizada para o tratamento entre <Ultimate> e <FLX>.|As placas <Ultimate> são mais finas, mais confortáveis e mais resistentes a manchas.|As placas <FLX> possuem maior resistência, flexibilidade e forças mais constantes||."
         texto= texto + "Além disso, você também pode optar pelo <recorte padrão> (corte reto, 2mm acima da margem gengival) ou <recorte cervical> com contorno gengival.||"
         texto= texto + "Lembrando que a escolha das placas e do recorte deve ser baseada na experiência do profissional e em especial no caso a ser tratado.||"
-        texto= texto + "<Verifique com o seu consultor com relação aos custos do pacote indicado, placas e recorte escolhido.>||%"
+        texto= texto + "<Verifique com o seu consultor com relação aos custos do pacote indicado, placas e recorte escolhido.>||£"
         texto= texto + "Está indicado a realização de ajuste oclusal durante e após a movimentação dentária sugerida neste setup.||A situação periodontal do paciente deve ser mantida sob controle, como em todo tratamento ortodôntico.||"
         texto= texto + "Em geral, os alinhadores ortodônticos devem ser utilizados em tempo integral, dia e noite e devem ser retirados para a mastigação e higiene bucal.||"
         texto= texto + "A substituição dos alinhadores Ortho Aligner deve ocorrer a intervalos de quinze a vinte dias, observadas as características de cada paciente, tais como idade, saúde geral, bucal e periodontal, ou ainda a critério do profissional responsável pelo tratamento.||"
@@ -190,9 +202,28 @@ class auxtools(object):
         texto= texto + "A contenção pós tratamento deverá ser instalada após o uso do último alinhador.||"
         texto= texto + "<Informamos que caso seja solicitada a alteração do setup, iremos acrescentar mais (2) dois dias úteis no prazo de entrega do planejamento para o envio do mesmo.>||"
         texto= texto + "<{ortodont}>|Compass3D§"
-        texto= texto.format(comment= texto0,Paciente= self.nome,sup=5,inf=5,v="-",l="-",o="-",att="dois",quant="10",extenso="dez",pacote="FULL",ortodont="Diogo Frazão")
+        print(self.comment,self.sup,self.inf,self.paciente,self.ortodont,self.vest,self.lin,self.ocl)
+        texto= texto.format(comment= texto0,Paciente= self.paciente,sup=self.extenso(self.sup),inf=self.extenso(self.inf),v=self.vest,l=self.lin,o=self.ocl,att=self.extenso(self.att),quant=self.sup + self.inf,extenso=self.extenso(self.sup + self.inf),pacote=self.pacote,ortodont=self.ortodont)
         self.bl2.setTextOrigin(int(x),int(y))
         self.coords = [0,0,0,0]
         self.write(texto)
         self.rodape()
         self.pdf.linkURL('mailto:contato@compass3d.com.br', self.coords, relative=1)
+    def extenso(self,num):
+                listadef= {}
+                n= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,40,50,60,70,80,90,100]
+                nums= ["Um","Dois","Três","Quatro","Cinco","Seis","Sete","Oito","Nove","Dez","Onze",
+                       "Doze","Treze","Quatorze","Quinze","Dezesseis","Dezessete","Dezoito","Dezenove",
+                       "Vinte","Trinta","Quarenta","Cinquenta","Sessenta","Setenta","Oitenta","Noventa",
+                       "Cem"]
+                for pp in range(0,len(n)):
+                        listadef[n[pp]]= nums[pp]
+                if(int(num) in n):
+                        return listadef[int(num)]
+                kk= ""
+                x=0
+                if(int(num) > 100):
+                        kk += "Cento e"
+                        x += 1
+                kk = kk + listadef[int(num[x] + "0")] + " e " + listadef[int(num[x+1])]
+                return kk
