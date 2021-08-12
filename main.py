@@ -51,10 +51,12 @@ class PyReport(utils.auxtools):
                 inf= ["31","32","33","34","35","36","37","38","41","42","43","44","45","46","47","48"]
                 for i in sup:
                         if(i in self.vest or i in self.lin or i in self.ocl):
-                                self.att= 1
+                                self.att += 1
+                                break
                 for i in inf:
                         if(i in self.vest or i in self.lin or i in self.ocl):
-                                self.att= 2
+                                self.att += 1
+                                break
                 self.lb1["text"]= "Quant Sup"
                 self.lb2["text"]= "Quant Inf"
                 self.btn["command"]= self.step5

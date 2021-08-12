@@ -32,7 +32,7 @@ class auxtools(object):
         self.pdf.setFillColorRGB(31/255,91/255,141/255)
         self.pdf.setStrokeColorRGB(31/255,91/255,141/255)
         self.pdf.rect(0,0,827,160, fill=1)
-        img= ImageReader("OrthoAligner.png")
+        img= ImageReader("imgs/OrthoAligner.png")
         self.pdf.scale(1,-1)
         imgw= 250
         self.pdf.drawImage(img,self.Center(imgw),-150, width= imgw, height= 200, mask='auto', preserveAspectRatio= True, anchor="c")
@@ -164,22 +164,27 @@ class auxtools(object):
         self.pdf.drawString(30,779,"@compasscomvoce                       /compasscomvoce")
         self.pdf.drawString(30,799,"contato@compass3d.com.br         www.compass3d.com.br")
         self.pdf.drawString(30,819,"Av. Carandaí, 161 - 2º andar, Funcionários / BH-MG")
-        img= ImageReader("Compass3D.png")
+        img= ImageReader("imgs/Compass3D.png")
         self.pdf.scale(1,-1)
         self.pdf.drawImage(img,(self.width/5)*3 + 40,-1270, width= 168, height= 525, mask='auto', preserveAspectRatio= True, anchor="l")
     def body(self):
+        if("ltda" in self.dentista):
+            clin= ""
+        else:
+            clin= "Dr(a) "
         self.pdf.setFont("Helvetica",13)
         self.pdf.setFillColorRGB(0,0,0)
         self.pdf.drawString(40,200, "Prezado")
         self.pdf.setFont("Helvetica-Bold",13)
-        self.pdf.drawString(96,200, "Dr(a) " + self.dentista)
+        self.pdf.drawString(96,200, clin + self.dentista)
         self.pdf.setFont("Helvetica",13)
         x= 40
-        y= 230
+        y= 220
         texto0= self.comment
         x= 40
         self.bl2= self.pdf.beginText()
         if(texto0 == ""):
+            texto0= texto0.replace("\n","")
             texto= texto0
         else:
             texto = "{comment}|"
@@ -227,6 +232,7 @@ class auxtools(object):
                 
         texto= texto + "O caso será tratado com um <OrthoAligner {pacote}>.|"
         if(self.validade != ""):
+            self.validade= self.validade.replace("\n","")
             texto= texto + "<" + self.validade + ">|"
         texto= texto + "|Você poderá escolher o tipo de placa utilizada para o tratamento entre <Ultimate> e <FLX>.|As placas <Ultimate> são mais finas, mais confortáveis e mais resistentes a manchas.|As placas <FLX> possuem maior resistência, flexibilidade e forças mais constantes||."
         texto= texto + "Além disso, você também pode optar pelo <recorte padrão> (corte reto, 2mm acima da margem gengival) ou <recorte cervical> com contorno gengival.||"
