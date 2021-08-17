@@ -245,6 +245,27 @@ class auxtools(object):
             self.sup = "0"
         if(self.inf == ""):
             self.inf= "0"
+        aux= ""
+        for i in self.vest:
+            if(i == ","):
+                aux += i + " "
+            else:
+                aux += i
+        self.vest = aux
+        aux= ""
+        for i in self.lin:
+            if(i == ","):
+                aux += i + " "
+            else:
+                aux += i
+        self.lin= aux
+        aux= ""
+        for i in self.ocl:
+            if(i == ","):
+                aux += i + " "
+            else:
+                aux += i
+        self.ocl= aux
         texto= texto.format(comment= texto0,Paciente= self.paciente,sup=self.extenso(self.sup),inf=self.extenso(self.inf),v=self.vest,l=self.lin,o=self.ocl,att=self.extenso(str(self.att)),quant=int(self.sup) + int(self.inf) + self.att,extenso=self.extenso(int(self.sup) + int(self.inf) + self.att),pacote=self.pacote,ortodont=self.ortodont)
         self.bl2.setTextOrigin(int(x),int(y))
         self.coords = [0,0,0,0]

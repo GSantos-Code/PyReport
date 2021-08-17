@@ -72,6 +72,13 @@ class PyReport(utils.auxtools):
                                 self.att += 1
                                 self.infatt= " + Attach"
                                 break
+                if("D" in self.vest or "D" in self.lin or "D" in self.ocl):
+                        self.att= 2
+                        self.supatt= " + Attach"
+                        self.infatt= " + Attach"
+                        self.vest="-"
+                        self.lin= "-"
+                        self.ocl= "-"
                 self.lb1["text"]= "Quant Sup"
                 self.lb2["text"]= "Quant Inf"
                 self.btn["command"]= self.step5

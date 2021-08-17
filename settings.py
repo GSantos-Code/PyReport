@@ -9,7 +9,7 @@ class settings:
         self.chrome= p.getWindowsWithTitle("Google Chrome")
     def setupActive(self):
         p.click(26,237)
-    def estCapt(self, op):
+    def estCapt(self, op, arcs):
         p.click(716,37)
         t.sleep(2)
         path= self.path + "\\"
@@ -22,14 +22,16 @@ class settings:
             self.ortho[0].activate()
             p.click(486,12)
             t.sleep(1)
-            p.click(1144,75)
-            t.sleep(2)
-            p.screenshot(region=(253,50,871,369)).save(path + "9.png")
-            p.click(1141,359)
-            p.click(486,12)
-            t.sleep(2)
-            p.screenshot(region=(253,97,865,320)).save(path + "10.png")
-            p.click(1134,12)
+            if(arcs == "Superior" or arcs == "Ambas"):
+                p.click(1144,75)
+                t.sleep(2)
+                p.screenshot(region=(253,50,871,369)).save(path + "9.png")
+            if(arcs == "Inferior" or arcs == "Ambas"):
+                p.click(1141,359)
+                p.click(486,12)
+                t.sleep(2)
+                p.screenshot(region=(253,97,865,320)).save(path + "10.png")
+        p.click(1134,12)
         p.click(354,71)
         t.sleep(4)
         p.screenshot(region=(3,32,1129,620)).save(path + "11.png")

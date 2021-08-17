@@ -16,9 +16,15 @@ class Book(main.PyReport):
                 self.fonte= ImageFont.truetype("fonts/Arial.ttf",self.tam)
                 self.padx= padx
                 self.height= height
+                auxdent= self.dentista.split(" ")
+                try:
+                        dentista= auxdent[0] + " " + auxdent[1]
+                except Exception:
+                        dentista= self.dentista
                 if("a" in self.comment):
                 		height= 2300
-                		self.comment= self.comment.replace("\n"," <break> ")
+                		self.comment= self.comment.replace("\n"," <break> <break> ")
+                		self.comment= "Prezado(a) " + dentista + " <break> " + self.comment
                 self.book= Image.new("RGB",(width,height),bg)
                 self.draw= ImageDraw.Draw(self.book)
                 self.cRect((0,0,self.width,int(340)),(31,91,141))
@@ -54,11 +60,14 @@ class Book(main.PyReport):
                 elif(self.pacote == "Refino VI"):
                 		texto += "Tratado anteriormente com OrthoAligner Refino I, II, III, IV, V"
                 texto += " > <break> O caso será tratado com um < OrthoAligner {pacote} > <break>"
-                validade= "Ilimitado ate agosto/2022"
                 if("Fase" in self.pacote or "Refino" in self.pacote):
-                		texto += " < " + validade + " > "
+                		texto += " < " + self.validade + " > "
                 texto= texto.replace("|"," <break> ")
-                texto= texto.format(paciente=self.paciente,sup=str(self.sup) + self.supatt,inf=str(self.inf) + self.infatt,total=int(self.sup) + int(self.inf), extenso=self.extenso(str(int(self.sup) + int(self.inf))),pacote= self.pacote)
+                if(self.sup == 0):
+                        self.sup= "-"
+                if(self.inf == 0):
+                        self.inf= "-"
+                texto= texto.format(paciente=self.paciente,sup=self.sup + self.supatt,inf=self.inf + self.infatt,total=int(self.sup) + int(self.inf) + int(self.att), extenso=self.extenso(str(int(self.sup) + int(self.inf) + int(self.att))),pacote= self.pacote)
                 self.Paragraph(texto)
                 self.cRect((0,height-100,width,height),bg=(31,91,141))
                 self.Textc("Consulte as informações completas na Ficha de Instruções",(255,255,255),["c",height-70], 40)
