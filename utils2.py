@@ -10,6 +10,7 @@ import Capture
 class Book(main.PyReport):
         def __init__(self, width, height, bg, padx):
                 super().__init__("14")
+                self.calc= 1
                 self.width= width
                 self.Y= 400
                 self.tam= 35
@@ -22,10 +23,12 @@ class Book(main.PyReport):
                 except Exception:
                         dentista= self.dentista
                 if("a" in self.comment):
-                		height= 2300
                 		self.comment= self.comment.replace("\n"," <break> <break> ")
                 		self.comment= "Prezado(a) " + dentista + " <break> " + self.comment
-                self.book= Image.new("RGB",(width,height),bg)
+                for k in self.comment.split(" "):
+                        if(k == "<break>"):
+                                self.calc += 1
+                self.book= Image.new("RGB",(width,height + (self.calc * 40)),bg)
                 self.draw= ImageDraw.Draw(self.book)
                 self.cRect((0,0,self.width,int(340)),(31,91,141))
                 self.Textc("Resumo Setup Virtual",(255,255,255),["c",230], 60)
@@ -63,11 +66,13 @@ class Book(main.PyReport):
                 if("Fase" in self.pacote or "Refino" in self.pacote):
                 		texto += " < " + self.validade + " > "
                 texto= texto.replace("|"," <break> ")
-                if(self.sup == 0):
-                        self.sup= "-"
-                if(self.inf == 0):
-                        self.inf= "-"
-                texto= texto.format(paciente=self.paciente,sup=self.sup + self.supatt,inf=self.inf + self.infatt,total=int(self.sup) + int(self.inf) + int(self.att), extenso=self.extenso(str(int(self.sup) + int(self.inf) + int(self.att))),pacote= self.pacote)
+                sup= self.sup
+                inf= self.inf
+                if(self.sup == "0"):
+                        sup= "-"
+                if(self.inf == "0"):
+                        inf= "-"
+                texto= texto.format(paciente=self.paciente,sup=sup + self.supatt,inf=inf + self.infatt,total=int(self.sup) + int(self.inf) + int(self.att), extenso=self.extenso(str(int(self.sup) + int(self.inf) + int(self.att))),pacote= self.pacote)
                 self.Paragraph(texto)
                 self.cRect((0,height-100,width,height),bg=(31,91,141))
                 self.Textc("Consulte as informações completas na Ficha de Instruções",(255,255,255),["c",height-70], 40)
@@ -127,4 +132,4 @@ class Book(main.PyReport):
                         self.book.paste(img,(int((self.width - img.size[0])/2),center[1]),mask=img)
                 else:
                         self.book.paste(img,center[0],center[1],mask=img)
-k = Book(1104,1700,(255,255,255),40)
+k = Book(1104,1600,(255,255,255),40)
