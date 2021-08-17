@@ -96,5 +96,3 @@ class PyReport(utils.auxtools):
         def step7(self):
                 self.validade= self.entrada1.get()
                 self.i.destroy()
-                
-x= PyReport("TESTE")
