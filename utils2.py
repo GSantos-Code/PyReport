@@ -4,20 +4,15 @@ import os
 import re
 import tkinter as tt
 from tkinter import Tk, Text, Button, END
-import utils
+import main
+import Capture
 
-class Book(utils.PyReport):
+class Book(main.PyReport):
         def __init__(self, width, height, bg, padx):
                 super().__init__("14")
                 self.width= width
                 self.Y= 400
                 self.tam= 35
-                self.i= Tk()
-                self.t= Text(self.i, wrap= tt.WORD)
-                self.t.pack()
-                self.btn= Button(self.i, text="Ok", command= self.pick)
-                self.btn.pack()
-                self.i.mainloop()
                 self.fonte= ImageFont.truetype("fonts/Arial.ttf",self.tam)
                 self.padx= padx
                 self.height= height
@@ -36,43 +31,43 @@ class Book(utils.PyReport):
                 texto += "<break> <break> Alinhadores Superiores: < {sup} > "
                 texto += "<break> Alinhadores Inferiores: < {inf} > "
                 texto += "<break> <break> Total de Alinhadores: < {total}({extenso}) > <break> <break>"
-                pacote = "Fase II"
-                if("Fase" in pacote or "Refino" in pacote):
+                if("Fase" in self.pacote or "Refino" in self.pacote):
                 		texto += " < "
-                if(pacote == "Fase II"):
+                if(self.pacote == "Fase II"):
                 		texto += "Tratado anteriormente com OrthoAligner Fase I"
-                elif(pacote == "Fase III"):
+                elif(self.pacote == "Fase III"):
                 		texto += "Tratado anteriormente com OrthoAligner Fase I, II"
-                elif(pacote == "Fase IV"):
+                elif(self.pacote == "Fase IV"):
                 		texto += "Tratado anteriormente com OrthoAligner Fase I, II, III"
-                elif(pacote == "Fase V"):
+                elif(self.pacote == "Fase V"):
                 		texto += "Tratado anteriormente com OrthoAligner Fase I, II, III, IV"
-                elif(pacote == "Fase VI"):
+                elif(self.pacote == "Fase VI"):
                 		texto += "Tratado anteriormente com OrthoAligner Fase I, II, III, IV, V"
-                if(pacote == "Refino II"):
+                if(self.pacote == "Refino II"):
                 		texto += "Tratado anteriormente com OrthoAligner Refino I"
-                elif(pacote == "Refino III"):
+                elif(self.pacote == "Refino III"):
                 		texto += "Tratado anteriormente com OrthoAligner Refino I, II"
-                elif(pacote == "Refino IV"):
+                elif(self.pacote == "Refino IV"):
                 		texto += "Tratado anteriormente com OrthoAligner Refino I, II, III"
-                elif(pacote == "Refino V"):
+                elif(self.pacote == "Refino V"):
                 		texto += "Tratado anteriormente com OrthoAligner Refino I, II, III, IV"
-                elif(pacote == "Refino VI"):
+                elif(self.pacote == "Refino VI"):
                 		texto += "Tratado anteriormente com OrthoAligner Refino I, II, III, IV, V"
                 texto += " > <break> O caso será tratado com um < OrthoAligner {pacote} > <break>"
                 validade= "Ilimitado ate agosto/2022"
-                if("Fase" in pacote or "Refino" in pacote):
+                if("Fase" in self.pacote or "Refino" in self.pacote):
                 		texto += " < " + validade + " > "
-                texto= texto.format(paciente="teste",sup="5",inf="5",total="10", extenso="Dez", pacote= "LITE")
+                texto= texto.replace("|"," <break> ")
+                texto= texto.format(paciente=self.paciente,sup=str(self.sup) + self.supatt,inf=str(self.inf) + self.infatt,total=int(self.sup) + int(self.inf), extenso=self.extenso(str(int(self.sup) + int(self.inf))),pacote= self.pacote)
                 self.Paragraph(texto)
                 self.cRect((0,height-100,width,height),bg=(31,91,141))
                 self.Textc("Consulte as informações completas na Ficha de Instruções",(255,255,255),["c",height-70], 40)
-                self.book.save("12.png")
+                self.book.save(self.path + "/" + "12.png")
+                path= self.path
+                capture= Capture.CaptureView(path)
+                capture.capture()
         def cRect(self,coords,bg):
                 self.draw.rectangle(coords,fill=bg)
-        def pick(self):
-        		self.comment= self.t.get("1.0", END)
-        		self.i.destroy()
         def Paragraph(self,txt):
         		temp= " "
         		cont= 40

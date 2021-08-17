@@ -6,6 +6,8 @@ class PyReport(utils.auxtools):
         def __init__(self, pdfname):
                 self.i= Tk()
                 self.validade= ""
+                self.supatt= ""
+                self.infatt= ""
                 self.i.config(bg="orange")
                 self.i.title("PyReport")
                 self.i.state("zoomed")
@@ -21,20 +23,31 @@ class PyReport(utils.auxtools):
                 self.lb2.pack()
                 self.entrada2= Entry(self.frame, font="Arial 20", justify="center", fg= "black", relief= FLAT)
                 self.entrada2.pack(pady="30px")
-                self.btn= Button(self.frame, relief= FLAT, text="Proximo" ,font="Arial 20", bg="green", fg="white" ,command=self.step2)
+                self.btn= Button(self.frame, relief= FLAT, text="Proximo" ,font="Arial 20", bg="green", fg="white" ,command=self.step0)
                 self.btn.pack(pady="10px",side=BOTTOM)
                 self.i.mainloop()
-                super().__init__(pdfname)
+                super().__init__(self.path + "/" + pdfname)
         def clear(self):
                 self.entrada1.delete(0,END)
                 self.entrada2.delete(0,END)
-        def step2(self):
+        def step0(self):
                 self.paciente= self.entrada1.get()
                 self.dentista= self.entrada2.get()
+                self.clear()
+                self.lb1["text"]= "Digite o Caminho da Pasta"
+                self.lb2.pack_forget()
+                self.entrada2.pack_forget()
+                self.btn["command"] = self.step2
+        def step2(self):
+                self.path= self.entrada1.get()
                 self.clear()
                 self.lb1["text"]= "Nome do Ortodontista"
                 self.lb2["text"]= "Face Vestibular"
                 self.btn["command"]= self.step3
+                self.btn.pack_forget()
+                self.lb2.pack()
+                self.entrada2.pack()
+                self.btn.pack(pady="10px",side=BOTTOM)
         def step3(self):
                 self.ortodont= self.entrada1.get()
                 self.vest= self.entrada2.get()
@@ -52,10 +65,12 @@ class PyReport(utils.auxtools):
                 for i in sup:
                         if(i in self.vest or i in self.lin or i in self.ocl):
                                 self.att += 1
+                                self.supatt= " + Attach"
                                 break
                 for i in inf:
                         if(i in self.vest or i in self.lin or i in self.ocl):
                                 self.att += 1
+                                self.infatt= " + Attach"
                                 break
                 self.lb1["text"]= "Quant Sup"
                 self.lb2["text"]= "Quant Inf"

@@ -16,11 +16,7 @@ class auxtools(object):
         self.aux2= ""
         self.pagebreak= 0
         self.height= 842
-        try:
-            os.mkdir("output")
-        except Exception:
-            pass
-        self.pdf= canvas.Canvas("output/14.pdf", verbosity= 1, bottomup= 0)
+        self.pdf= canvas.Canvas(self.path + "/14.pdf", verbosity= 1, bottomup= 0)
         self.pdf.setPageSize((596,842))
         self.pdf.setTitle(pdfname)
         self.Header()
