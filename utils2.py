@@ -11,6 +11,7 @@ class Book(main.PyReport):
         def __init__(self, width, height, bg, padx):
                 super().__init__("14")
                 self.calc= 1
+                auxv= 0
                 self.width= width
                 self.Y= 400
                 self.tam= 35
@@ -26,9 +27,13 @@ class Book(main.PyReport):
                 		self.comment= self.comment.replace("\n"," <break> <break> ")
                 		self.comment= "Prezado(a) " + dentista + " <break> " + self.comment
                 for k in self.comment.split(" "):
+                        auxv += 1
                         if(k == "<break>"):
                                 self.calc += 1
-                self.book= Image.new("RGB",(width,height + (self.calc * 40)),bg)
+                        if(auxv % 7 == 0):
+                                self.calc += 1
+                height= height + (self.calc * 40) - 200
+                self.book= Image.new("RGB",(width,height),bg)
                 self.draw= ImageDraw.Draw(self.book)
                 self.cRect((0,0,self.width,int(340)),(31,91,141))
                 self.Textc("Resumo Setup Virtual",(255,255,255),["c",230], 60)
