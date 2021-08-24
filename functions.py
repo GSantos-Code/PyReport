@@ -24,25 +24,25 @@ class functions(s.settings):
         if(btn == "on"):
             p.PAUSE=0.5
             p.click(40,285, clicks=4)
-            p.click(236,408)
+            p.click(236,400)
             t.sleep(3)
             self.Dist("on")
         else:
             p.PAUSE=0.5
             p.click(40,285, clicks=4)
-            p.click(236,408)
+            p.click(236,400)
             t.sleep(3)
             self.Dist("off")
             
     def Dist(self,btn):
         p.click(36,340)
         if(btn == "off"):
-            p.click(61,428)
+            p.click(61,418)
         else:
-            p.click(203,428)
+            p.click(203,418)
     def DownMenu(self):
         p.moveTo(256,154)
-        p.click(256,605, clicks=2)
+        p.click(256,599, clicks=2)
     def Photo(self,text):
         p.click(1340,636)
         p.write(text)
@@ -104,29 +104,38 @@ class functions(s.settings):
             p.click(1301,89)
     def captFront(self):
         p.click(1340,423)
-        p.click(1340,169)
         p.alert(title="Atenção", text="Ajuste a posição inicial")
         t.sleep(3)
         self.Photo("Vista Oclusal Anterior")
     def captBack(self):
         p.moveTo(700,321)
-        p.dragTo(1054,321, button="right")
+        p.mouseDown(button="RIGHT")
+        p.moveTo(1054,321)
+        p.mouseUp(button="LEFT")
         self.Photo("Vista Oclusal Posterior")
     def captLeft90(self):
         p.moveTo(700,321)
-        p.dragTo(511,321, button="right")
+        p.mouseDown(button="RIGHT")
+        p.moveTo(511,321)
+        p.mouseUp(button="RIGHT")
         self.Photo("Vista Lateral Direita 90°")
     def captLeft45(self):
         p.moveTo(700,321)
-        p.dragTo(593,321, button="right")
+        p.mouseDown(button="RIGHT")
+        p.moveTo(593,321)
+        p.mouseUp(button="RIGHT")
         self.Photo("Vista Lateral Direita 45°")
     def captRight90(self):
         p.moveTo(700,321)
-        p.dragTo(480,321, button="right")
+        p.mouseDown(button="RIGHT")
+        p.moveTo(480,321)
+        p.mouseUp(button="RIGHT")
         self.Photo("Vista Lateral Esquerda 90°")
     def captRight45(self):
         p.moveTo(700,321)
-        p.dragTo(795,321, button="right")
+        p.mouseDown(button="RIGHT")
+        p.moveTo(795,321)
+        p.mouseUp(button="RIGHT")
         self.Photo("Vista Lateral Esquerda 45°")
     def captOclSup(self,op):
         p.PAUSE= 0.2
