@@ -24,13 +24,13 @@ class functions(s.settings):
         if(btn == "on"):
             p.PAUSE=0.5
             p.click(40,285, clicks=4)
-            p.click(236,400)
+            p.click(237,408)
             t.sleep(3)
             self.Dist("on")
         else:
             p.PAUSE=0.5
             p.click(40,285, clicks=4)
-            p.click(236,400)
+            p.click(237,408)
             t.sleep(3)
             self.Dist("off")
             

@@ -28,7 +28,7 @@ class auxtools(object):
         self.pdf.setFillColorRGB(31/255,91/255,141/255)
         self.pdf.setStrokeColorRGB(31/255,91/255,141/255)
         self.pdf.rect(0,0,827,160, fill=1)
-        img= ImageReader("imgs/OrthoAligner.png")
+        img= ImageReader("imgs\\OrthoAligner.png")
         self.pdf.scale(1,-1)
         imgw= 250
         self.pdf.drawImage(img,self.Center(imgw),-150, width= imgw, height= 200, mask='auto', preserveAspectRatio= True, anchor="c")
@@ -160,7 +160,7 @@ class auxtools(object):
         self.pdf.drawString(30,779,"@compasscomvoce                       /compasscomvoce")
         self.pdf.drawString(30,799,"contato@compass3d.com.br         www.compass3d.com.br")
         self.pdf.drawString(30,819,"Av. Carandaí, 161 - 2º andar, Funcionários / BH-MG")
-        img= ImageReader("imgs/Compass3D.png")
+        img= ImageReader("imgs\\Compass3D.png")
         self.pdf.scale(1,-1)
         self.pdf.drawImage(img,(self.width/5)*3 + 40,-1270, width= 168, height= 525, mask='auto', preserveAspectRatio= True, anchor="l")
     def body(self):
