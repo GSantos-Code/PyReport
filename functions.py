@@ -10,41 +10,44 @@ class functions(s.settings):
         p.PAUSE= 0.05
     def Sobrepos(self,btn):
         if(btn == "on"):
-            p.click(1300,225)
+            p.click(1854,224)
         else:
-            p.click(1227,224)
+            p.click(1778,224)
     def Transp(self,btn):
         t.sleep(1)
         if(btn == "on"):
-            p.click(1301,142)
+            p.click(1852,143)
         else:
-            p.click(1224,225)
+            p.click(1778,225)
     def IPR(self, btn):
         self.DownMenu()
         if(btn == "on"):
             p.PAUSE=0.5
-            p.click(40,285, clicks=4)
-            p.click(236,400)
+            p.click(44,502, clicks=4)
+            p.click(235,611)
             t.sleep(3)
+            self.Transp("on")
             self.Dist("on")
         else:
             p.PAUSE=0.5
-            p.click(40,285, clicks=4)
-            p.click(236,400)
+            p.click(44,502, clicks=4)
+            p.click(236,611)
             t.sleep(3)
             self.Dist("off")
             
     def Dist(self,btn):
-        p.click(36,340)
         if(btn == "off"):
-            p.click(61,418)
+            p.click(39,543)
+            p.click(58,630)
         else:
-            p.click(203,418)
+            p.click(39,543)
+            p.click(206,631)
     def DownMenu(self):
-        p.moveTo(256,154)
-        p.click(256,599, clicks=2)
+        #p.moveTo(255,735)
+        #p.click(255,735, clicks=2)
+        pass
     def Photo(self,text):
-        p.click(1340,636)
+        p.click(1888,640)
         p.write(text)
         p.press(["tab","tab","tab"])
         p.press("enter")
@@ -80,37 +83,37 @@ class functions(s.settings):
                 self.Photo("Vista Oclusal Inferior sem indicacao IPR")
     def Menu(self,btn):
         if(btn == "Otop"):
-            p.click(1340,344)
+            p.click(1890,345)
         elif(btn == "Oinf"):
-            p.click(1340,309)
+            p.click(1890,311)
         elif(btn == "Right"):
-            p.click(1340,238)
+            p.click(1890,238)
         elif(btn == "Left"):
-            p.click(1340,275)
+            p.click(1890,275)
         elif(btn == "Front"):
-            p.click(1340,169)
+            p.click(1890,166)
         elif(btn == "Post"):
-            p.click(1340,196)
+            p.click(1890,202)
         
     def Mand(self,btn):
         if(btn == "off"):
-            p.click(1225,120)
+            p.click(1778,115)
         else:
-            p.click(1298,120)
+            p.click(1851,115)
     def Max(self,btn):
         if(btn == "off"):
-            p.click(1230,89)
+            p.click(1778,92)
         else:
-            p.click(1301,89)
+            p.click(1851,88)
     def captFront(self):
-        p.click(1340,423)
+        p.click(1890,417)
         p.alert(title="Atenção", text="Ajuste a posição inicial")
         t.sleep(3)
         self.Photo("Vista Oclusal Anterior")
     def captBack(self):
         p.moveTo(700,321)
         p.mouseDown(button="RIGHT")
-        p.moveTo(1054,321)
+        p.moveTo(1067,321)
         p.mouseUp(button="LEFT")
         self.Photo("Vista Oclusal Posterior")
     def captLeft90(self):
@@ -168,6 +171,9 @@ class functions(s.settings):
             self.SobreposPhoto("inf")
         else:
             self.Sobrepos("off")
+            #p.click(39,501)
+            #p.click(256,156)
+            self.DownMenu()
             self.IPR("on")
             self.IPRPhoto("inf")
     

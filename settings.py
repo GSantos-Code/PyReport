@@ -10,31 +10,31 @@ class settings:
     def setupActive(self):
         p.click(26,237)
     def estCapt(self, op, arcs):
-        p.click(716,37)
+        p.click(1400,34)
         t.sleep(2)
         path= self.path + "\\"
-        p.click(254,167)
+        p.click(254,154)
         t.sleep(3)
-        p.click(227,239)
+        p.click(230,239)
         t.sleep(1)
         if(op == "SIM"):
-            p.click(1142,73)
+            p.click(1140,73)
             self.ortho[0].activate()
             p.click(486,12)
             t.sleep(1)
             if(arcs == "Superior" or arcs == "Ambas"):
-                p.click(1144,75)
+                p.click(1140,73)
                 t.sleep(2)
-                p.screenshot(region=(253,50,871,369)).save(path + "9.png")
+                p.screenshot(region=(253,50,871,370)).save(path + "9.png")
             if(arcs == "Inferior" or arcs == "Ambas"):
                 p.click(1141,359)
                 p.click(486,12)
                 t.sleep(2)
-                p.screenshot(region=(253,97,865,320)).save(path + "10.png")
+                p.screenshot(region=(253,97,871,320)).save(path + "10.png")
         p.click(1134,12)
         p.click(354,71)
         t.sleep(4)
-        p.screenshot(region=(3,32,1129,620)).save(path + "11.png")
+        p.screenshot(region=(3,32,1129,596)).save(path + "11.png")
         p.alert(title="Sucess", text="Script Executado com sucesso!")
     def modelAc(self):
         p.press("pagedown")
