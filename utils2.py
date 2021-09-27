@@ -15,7 +15,7 @@ class Book(main.PyReport):
                 self.width= width
                 self.Y= 400
                 self.tam= 35
-                self.fonte= ImageFont.truetype("fonts/Arial.ttf",self.tam)
+                self.fonte= ImageFont.truetype(r"C:\Program Files\PyReport-1600x900\build\exe.win-amd64-3.9\imgsfonts\Arial.ttf",self.tam)
                 self.padx= padx
                 self.height= height
                 auxdent= self.dentista.split(" ")
@@ -108,15 +108,15 @@ class Book(main.PyReport):
         						i = i.replace("<break>","")
         						print(i)
         				elif(i == "<"):
-        						self.fonte= ImageFont.truetype("fonts/Arial-Bold.ttf",self.tam)
+        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600x900\\build\\exe.win-amd64-3.9\\fonts\\Arial-Bold.ttf",self.tam)
         				elif(i == ">"):
-        						self.fonte= ImageFont.truetype("fonts/Arial.ttf",self.tam)
+        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600x900\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
         				else:
         						self.draw.text((cont, self.Y),i,fill= (0,0,0),font= self.fonte)
         						print(cont, cursor)
         						cont= cont + cursor[0] + 10
         def Textc(self,txt,color,c,tam):
-                fonte= ImageFont.truetype("fonts/Arial.ttf",tam)
+                fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600x900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",tam)
                 if("c" in c):
                 	x= self.draw.textlength(txt, font= fonte)
                 	self.draw.text((int((self.width-x)/2),c[1]),txt,fill=color,font=fonte)
