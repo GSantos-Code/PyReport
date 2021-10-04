@@ -8,4 +8,4 @@
 <p>- Não use os símbolos: &,#,§,|. São caracteres especiais para funcionamento da aplicação.</p>
 <p>- Se quiser deixar um texto em negrito use < meu texto > , se abrir a tag "<" não esqueça de fechar ">"
   
-  <p>Versão Atual: <span id="versaoapp">1.0</span></p>
+  <p>Versão Atual: <span id="versaoapp">1.1</span></p>
