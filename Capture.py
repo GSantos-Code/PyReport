@@ -25,5 +25,4 @@ class CaptureView(f.functions):
             self.captOclInf("ipr")
         quest= p.confirm(title="Tem Estagiamento?", text="", buttons=["SIM","NAO"])
         self.estCapt(quest,arcs)
-        sys.exit()
 

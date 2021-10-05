@@ -14,10 +14,12 @@ setup(
       description="Copyright 2021",
       executables=[exe],
       scripts=[
-               r'C:\Users\gabriel.azevedo\Desktop\Versão nova\PyReport\Capture.py',
-               r'C:\Users\gabriel.azevedo\Desktop\Versão nova\PyReport\functions.py',
-               r'C:\Users\gabriel.azevedo\Desktop\Versão nova\PyReport\main.py',
-               r'C:\Users\gabriel.azevedo\Desktop\Versão nova\PyReport\utils.py'
+               r'C:\Users\gabriel.azevedo\Desktop\Versions\PyReport-1600X900\Capture.py',
+               r'C:\Users\gabriel.azevedo\Desktop\Versions\PyReport-1600X900\functions.py',
+               r'C:\Users\gabriel.azevedo\Desktop\Versions\PyReport-1600X900\main.py',
+               r'C:\Users\gabriel.azevedo\Desktop\Versions\PyReport-1600X900\utils.py',
+               r'C:\Users\gabriel.azevedo\Desktop\Versions\PyReport-1600X900\ConvGIF.py'
+               
                ],
-      options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts")]}}
+      options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts"),("tools","tools")]}}
       ) 
