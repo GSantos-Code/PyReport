@@ -1,6 +1,4 @@
 from PIL import ImageDraw, Image, ImageFont
-from moviepy.editor import *
-from moviepy.video.io.VideoFileClip import VideoFileClip
 import textwrap
 from ConvGIF import ConvGIF as GIFcv
 import os
