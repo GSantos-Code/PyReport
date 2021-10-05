@@ -35,7 +35,7 @@ class settings:
         p.click(354,71)
         t.sleep(4)
         p.screenshot(region=(3,32,1129,620)).save(path + "11.png")
-        p.alert(title="Sucess", text="Script Executado com sucesso!")
+        p.alert(title="Tela Liberada!", text="Tela Liberada!")
     def modelAc(self):
         p.press("pagedown")
         p.press("enter", presses=3)

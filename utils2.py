@@ -1,11 +1,17 @@
 from PIL import ImageDraw, Image, ImageFont
+from moviepy.editor import *
+from moviepy.video.io.VideoFileClip import VideoFileClip
 import textwrap
+from ConvGIF import ConvGIF as GIFcv
 import os
+import time
 import re
 import tkinter as tt
+from tkinter import ttk
 from tkinter import Tk, Text, Button, END
 import main
 import Capture
+import sys
 
 class Book(main.PyReport):
         def __init__(self, width, height, bg, padx):
@@ -77,6 +83,8 @@ class Book(main.PyReport):
                         sup= "-"
                 if(self.inf == "0"):
                         inf= "-"
+                self.supp= sup
+                self.inff= inf
                 texto= texto.format(paciente=self.paciente,sup=sup + self.supatt,inf=inf + self.infatt,total=int(self.sup) + int(self.inf) + int(self.att), extenso=self.extenso(str(int(self.sup) + int(self.inf) + int(self.att))),pacote= self.pacote)
                 self.Paragraph(texto)
                 self.cRect((0,height-100,width,height),bg=(31,91,141))
@@ -84,7 +92,7 @@ class Book(main.PyReport):
                 self.book.save(self.path + "/" + "12.png")
                 path= self.path
                 capture= Capture.CaptureView(path)
-                capture.capture()
+                self.conv= ConvGIF(self)
         def cRect(self,coords,bg):
                 self.draw.rectangle(coords,fill=bg)
         def Paragraph(self,txt):
@@ -137,4 +145,105 @@ class Book(main.PyReport):
                         self.book.paste(img,(int((self.width - img.size[0])/2),center[1]),mask=img)
                 else:
                         self.book.paste(img,center[0],center[1],mask=img)
+                        
+class ConvGIF:
+        def __init__(self, master):
+                self.temp= Tk()
+                self.temp.title("Todos os vídeos estão na pasta?")
+                self.temp.config(bg="orange", padx="100px", pady="30px")
+                btn= Button(self.temp, text="Sim", command= self.go, bg="green", fg="white", relief="flat", font="Arial 18")
+                btn.pack(pady="10px")
+                self.temp.mainloop()
+                self.display= Tk()
+                self.display.title("PyReport")
+                self.lbl= tt.Label(self.display, text="Verificando vídeos... 0%", fg="white", bg="orange", font="Arial 18")
+                self.lbl.pack(pady="10px")
+                self.progress= ttk.Progressbar(self.display, mode="determinate", orient="horizontal", length= 100)
+                self.progress.pack(pady="10px")
+                self.display.config(bg="orange", padx= "30px", pady="30px")
+                self.infff= 0
+                self.setup= master.path.split("\\")
+                self.setup= self.setup[len(self.setup) - 1]
+                self.master= master
+                self.VerifyFiles()
+                self.display.mainloop()
+        def go(self):
+                self.temp.destroy()
+        def StatusBar(self, text, value):
+                self.display.update()
+                self.lbl["text"]= text
+                self.progress["value"] = value
+                self.display.update()
+        def VerifyFiles(self):
+                self.display.update()
+                main= self.master.path + "/"
+                file1,file2, file3, file4, file8= main + "1.avi", main + "2.avi", main + "3.avi", main + "4.avi", main + "8.avi"
+                print(self.master.inff != "-" or self.master.inff != "")
+                if(self.master.supp != "-" and self.master.inff != "-"):
+                        print(1)
+                        while True:
+                                if(os.path.isfile(file1) and os.path.isfile(file2) and os.path.isfile(file3) and os.path.isfile(file4) and os.path.isfile(file8)):
+                                        break
+                                else:
+                                        self.display.update()
+                                        time.sleep(2)
+                elif(self.master.supp == "-" or self.master.supp == ""):
+                        print(2)
+                        while True:
+                                if(os.path.isfile(file1) and os.path.isfile(file2) and os.path.isfile(file3) and os.path.isfile(file8)):
+                                        break
+                                else:
+                                        self.display.update()
+                                        time.sleep(2)
+                elif(self.master.inff == "-" or self.master.inff == ""):
+                        print(3)
+                        while True:
+                                if(os.path.isfile(file1) and os.path.isfile(file2) and os.path.isfile(file3) and os.path.isfile(file4)):
+                                        break
+                                else:
+                                        self.display.update()
+                                        time.sleep(2)
+                self.StatusBar("Convertendo vídeos... 40%", 30) 
+                self.CFiles("1","Video Vista Lateral Direita")
+                self.StatusBar("Convertendo vídeos... 60%", 40)
+                self.CFiles("2","Video Vista Frontal")
+                self.StatusBar("Convertendo vídeos... 80%", 80)
+                self.CFiles("3","Video Vista Lateral Esquerda")
+                if("D" in self.master.vest or "D" in self.master.lin or "D" in self.master.ocl):
+                        self.CFiles("4","Video Vista Oclusal Superior")
+                        self.CFiles("8","Video Vista Oclusal Inferior")
+                        self.StatusBar("Convertendo vídeos... 100%", 100)
+                        self.display.destroy()
+                        return 0;       
+                if(self.master.inff == "-" or self.master.inff == ""):
+                        self.master.inff= 0
+                        self.infff= "-"
+                if(self.master.supp != "-" and self.master.supp != ""):
+                        if(int(self.master.supp) > int(self.master.inff)):
+                                self.CFiles("4","Video Vista Oclusal Superior")
+                        else:
+                                self.SubFiles("4","Video Vista Oclusal Superior",self.master.supp)
+                else:
+                        self.master.supp= 0
+                if(self.infff == "-"):
+                        self.master.inff = self.infff
+                if(self.master.inff != "-" and self.master.inff != ""):
+                        if(int(self.master.inff) > int(self.master.supp)):
+                                self.CFiles("8","Video Vista Oclusal Inferior")
+                        else:
+                                self.SubFiles("8","Video Vista Oclusal Inferior",self.master.inff)
+                else:
+                        self.master.inff= 0
+                self.StatusBar("Convertendo vídeos... 100%", 100)
+                self.display.destroy()
+        def CFiles(self,video,name):
+                self.video1= GIFcv(f"{self.master.path}\\{video}.avi", f"{self.master.path}\\0{video} - {name} - {self.setup}.gif", pgs=self.lbl, update= self.display.update)
+                os.rename(f"{self.master.path}\\{video}.avi",f"{self.master.path}\\0{video} - {name} - {self.setup}.avi")
+        def SubFiles(self,video,name, endx):
+                self.video1= GIFcv(f"{self.master.path}\\{video}.avi", f"{self.master.path}\\0{video} - {name} - {self.setup}.gif", end= endx, pgs= self.lbl, update= self.display.update)
+                os.rename(f"{self.master.path}\\{video}.avi",f"{self.master.path}\\0{video} - {name} - {self.setup}.avi")
+
+                        
 k = Book(1104,1600,(255,255,255),40)
+
+

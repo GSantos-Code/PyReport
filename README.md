@@ -7,5 +7,3 @@
 <p>- Preencha os campos corretamente de acordo para que não ocorra um erro e a aplicação não produza o pdf como realmente deve ser produzido</p>
 <p>- Não use os símbolos: &,#,§,|. São caracteres especiais para funcionamento da aplicação.</p>
 <p>- Se quiser deixar um texto em negrito use < meu texto > , se abrir a tag "<" não esqueça de fechar ">"
-  
-  <p>Versão Atual: <span id="versaoapp">1.1</span></p>

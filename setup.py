@@ -14,10 +14,12 @@ setup(
       description="Copyright 2021",
       executables=[exe],
       scripts=[
-               r'C:\Users\gabriel.azevedo\Desktop\Edit\PyReport\Capture.py',
-               r'C:\Users\gabriel.azevedo\Desktop\Edit\PyReport\functions.py',
-               r'C:\Users\gabriel.azevedo\Desktop\Edit\PyReport\main.py',
-               r'C:\Users\gabriel.azevedo\Desktop\Edit\PyReport\utils.py'
+               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\Capture.py',
+               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\functions.py',
+               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\main.py',
+               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\utils.py',
+               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\ConvGIF.py'
                ],
-      options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts")]}}
+      options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts"),("tools","tools")],
+                                        'packages': ['moviepy', 'numpy', 'scipy', 'cv2', 'PIL']}}
       ) 
