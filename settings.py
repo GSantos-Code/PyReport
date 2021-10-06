@@ -34,7 +34,7 @@ class settings:
         p.click(1134,12)
         p.click(354,71)
         t.sleep(4)
-        p.screenshot(region=(3,32,1129,596)).save(path + f"11 - Tabela de Movimentação - {self.master.tsetup}.png")
+        p.screenshot(region=(3,32,1129,596)).save(path + f"11 - Tabela de Movimentacao - {self.master.tsetup}.png")
         p.alert(title="Sucess", text="Script Executado com sucesso!")
     def modelAc(self):
         p.press("pagedown")
