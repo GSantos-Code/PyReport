@@ -1,4 +1,6 @@
 from PIL import ImageDraw, Image, ImageFont
+from moviepy.editor import *
+from moviepy.video.io.VideoFileClip import VideoFileClip
 import textwrap
 from ConvGIF import ConvGIF as GIFcv
 import os
@@ -19,7 +21,7 @@ class Book(main.PyReport):
                 self.width= width
                 self.Y= 400
                 self.tam= 35
-                self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
+                self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600x900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
                 self.padx= padx
                 self.height= height
                 auxdent= self.dentista.split(" ")
@@ -41,7 +43,7 @@ class Book(main.PyReport):
                 self.draw= ImageDraw.Draw(self.book)
                 self.cRect((0,0,self.width,int(340)),(31,91,141))
                 self.Textc("Resumo Setup Virtual",(255,255,255),["c",230], 60)
-                self.img("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\imgs\\OrthoAligner.png",-7,center= ["c",-60])
+                self.img("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\imgs\\OrthoAligner.png",-7,center= ["c",-60])
                 texto= "O Setup Virtual para < {paciente} > foi planejado conforme suas instruções."
                 if("a" in self.comment):
                 	texto += " <break> <break> " + self.comment + " <break> "
@@ -87,9 +89,9 @@ class Book(main.PyReport):
                 self.Paragraph(texto)
                 self.cRect((0,height-100,width,height),bg=(31,91,141))
                 self.Textc("Consulte as informações completas na Ficha de Instruções",(255,255,255),["c",height-70], 40)
-                self.book.save(self.path + "/" + "12.png")
+                self.book.save(self.path + f"\\12 - Resumo de {self.tsetup} - {self.paciente}.png")
                 path= self.path
-                capture= Capture.CaptureView(path)
+                capture= Capture.CaptureView(path, self)
                 self.conv= ConvGIF(self)
         def cRect(self,coords,bg):
                 self.draw.rectangle(coords,fill=bg)
@@ -114,15 +116,15 @@ class Book(main.PyReport):
         						i = i.replace("<break>","")
         						print(i)
         				elif(i == "<"):
-        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial-Bold.ttf",self.tam)
+        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\fonts\\Arial-Bold.ttf",self.tam)
         				elif(i == ">"):
-        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
+        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
         				else:
         						self.draw.text((cont, self.Y),i,fill= (0,0,0),font= self.fonte)
         						print(cont, cursor)
         						cont= cont + cursor[0] + 10
         def Textc(self,txt,color,c,tam):
-                fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",tam)
+                fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",tam)
                 if("c" in c):
                 	x= self.draw.textlength(txt, font= fonte)
                 	self.draw.text((int((self.width-x)/2),c[1]),txt,fill=color,font=fonte)

@@ -3,8 +3,9 @@ import pyautogui as p
 import sys
 
 class CaptureView(f.functions):
-    def __init__(self,path):
+    def __init__(self,path,master):
         self.path= path
+        self.master= master
         super().__init__()
         self.capture()
     def capture(self):
