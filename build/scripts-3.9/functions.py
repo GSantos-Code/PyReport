@@ -108,13 +108,13 @@ class functions(s.settings):
         p.click(1569,417)
         p.alert(title="Atenção", text="Ajuste a posição inicial")
         t.sleep(3)
-        self.Photo("Vista Oclusal Anterior")
+        self.Photo("Vista Oclusao Anterior")
     def captBack(self):
         p.moveTo(700,391)
         p.mouseDown(button="RIGHT")
         p.moveTo(1067,391)
         p.mouseUp(button="LEFT")
-        self.Photo("Vista Oclusal Posterior")
+        self.Photo("Vista Oclusao Posterior")
     def captLeft90(self):
         p.moveTo(700,391)
         p.mouseDown(button="RIGHT")

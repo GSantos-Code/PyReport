@@ -45,6 +45,3 @@ class ConvGIF:
         gifsicle= r"C:\Program Files\PyReport-1600X900\build\exe.win-amd64-3.9\tools\gifsicle.exe"
         DETACHED_PROCESS = 0x00000008
         subprocess.call(f'"{gifsicle}" -i "{self.name}" -O3 --colors 256 -o "{self.name}"', creationflags=DETACHED_PROCESS)
-def nada():
-    pass
-x= ConvGIF(r"C:\Users\gabriel.azevedo\Desktop\AVI Teste\1.avi",r"C:\Users\gabriel.azevedo\Desktop\AVI Teste\1.gif",{"text": "oi"},nada,end=5)
