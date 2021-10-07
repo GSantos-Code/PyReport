@@ -2,11 +2,13 @@ from PIL import ImageDraw, Image, ImageFont
 import textwrap
 from ConvGIF import ConvGIF as GIFcv
 import os
+from datetime import date
+import zipfile
 import time
 import re
 import tkinter as tt
 from tkinter import ttk
-from tkinter import Tk, Text, Button, END
+from tkinter import Tk, Text, Button, END, Label
 import main
 import Capture
 import sys
@@ -91,6 +93,7 @@ class Book(main.PyReport):
                 path= self.path
                 capture= Capture.CaptureView(path, self)
                 self.conv= ConvGIF(self)
+                self.convertstls= ConvertSTLs(self)
         def cRect(self,coords,bg):
                 self.draw.rectangle(coords,fill=bg)
         def Paragraph(self,txt):
@@ -241,7 +244,150 @@ class ConvGIF:
                 self.video1= GIFcv(f"{self.master.path}\\{video}.avi", f"{self.master.path}\\0{video} - {name} - {self.setup}.gif", end= endx, pgs= self.lbl, update= self.display.update)
                 os.rename(f"{self.master.path}\\{video}.avi",f"{self.master.path}\\0{video} - {name} - {self.setup}.avi")
 
-                        
+class ConvertSTLs:
+        def __init__(self, master):
+                self.master= master
+                self.temp= Tk()
+                self.temp.title("Todos os arquivos estão na pasta?")
+                self.temp.config(bg="orange", padx="100px", pady="30px")
+                self.btn= Button(self.temp, text="Sim", command= self.go, bg="green", fg="white", relief="flat", font="Arial 18")
+                self.btn.pack(pady="10px")
+                self.temp.mainloop()
+        def go(self):
+                self.temp.title("Tem IPR?")
+                self.btn["command"]= self.yes
+                self.btn2= Button(self.temp, text="Não", command= self.no, bg="green", fg="white", relief="flat", font="Arial 18")
+                self.btn2.pack()
+        def yes(self):
+                self.op= "Y"
+                self.rename()
+        def no(self):
+                self.op= "N"
+                self.rename()
+        def rename(self):
+                self.btn.pack_forget()
+                self.btn2.pack_forget()
+                self.lbl= Label(self.temp, text="Renomeando e convertendo STLs... 0%", bg="orange", fg="white", font="Arial 15")
+                self.lbl.pack(pady="10px")
+                self.progress= ttk.Progressbar(self.temp, mode="determinate", orient="horizontal", length= 100)
+                self.progress.pack(pady="10px")
+                try:
+                        os.rename(self.master.path + "\\5.jpg",self.master.path + f"\\05 - Sobreposicao {self.master.tsetup} Superior - {self.master.paciente}.jpg")
+                except Exception:
+                        pass
+                try:
+                        os.rename(self.master.path + "\\6.jpg",self.master.path + f"\\06 - Sobreposicao {self.master.tsetup} Inferior - {self.master.paciente}.jpg")
+                except Exception:
+                        pass
+                try:
+                        os.rename(self.master.path + "\\13.pdf",self.master.path + f"\\13 - Relatorio de {self.master.tsetup} - {self.master.paciente}.pdf")
+                except Exception:
+                        pass
+                if(self.op == "Y"):
+                        try:
+                                os.rename(self.master.path + "\\7.png",self.master.path + f"\\07 - Relatorio de IPR {self.master.tsetup} - {self.master.paciente}.png")
+                        except Exception:
+                                try:
+                                        os.rename(self.master.path + "\\7.jpg",self.master.path + f"\\07 - Relatorio de IPR {self.master.tsetup} - {self.master.paciente}.jpg")                
+                                except Exception:
+                                        pass
+                else:
+                        try:
+                                os.rename(self.master.path + "\\7.png",self.master.path + f"\\07 - Vista Frontal - {self.master.tsetup}.png")
+                        except Exception:
+                                try:
+                                        os.rename(self.master.path + "\\7.jpg",self.master.path + f"\\07 - Vista Frontal - {self.master.tsetup}.jpg")
+                                except Exception:
+                                        pass
+                self.lbl["text"]= "Renomeando e convertendo STLs... 20%"
+                self.progress["value"]= 20
+                self.temp.update()
+                time.sleep(1)
+                self.processSTL()
+        def processSTL(self):
+                filestozip= []
+                try:
+                        os.rename(self.master.path + "\\15.stl","C:\\multimeshscripting\\input\\15.stl")
+                except Exception:
+                        pass
+                try:
+                        os.rename(self.master.path + "\\16.stl","C:\\multimeshscripting\\input\\16.stl")
+                except Exception:
+                        pass
+                try:
+                        os.rename(self.master.path + "\\17.stl","C:\\multimeshscripting\\input\\17.stl")
+                except Exception:
+                        pass
+                try:
+                        os.rename(self.master.path + "\\18.stl","C:\\multimeshscripting\\input\\18.stl")
+                except Exception:
+                        pass
+                os.system("C:\\multimeshscripting\\runMLXScript.bat")
+                self.lbl["text"]= "Renomeando e convertendo STLs... 50%"
+                self.progress["value"]= 50
+                self.temp.update()
+                time.sleep(1)
+                try:
+                        os.rename("C:\\multimeshscripting\\output\\15.stl",self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                try:
+                        os.rename("C:\\multimeshscripting\\output\\16.stl",self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                try:
+                        os.rename("C:\\multimeshscripting\\output\\17.stl",self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                try:
+                        os.rename("C:\\multimeshscripting\\output\\18.stl",self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                self.lbl["text"]= "Renomeando e convertendo STLs... 70%"
+                self.progress["value"]= 70
+                self.temp.update()
+                time.sleep(1)
+                try:
+                        os.remove("C:\\multimeshscripting\\input\\15.stl")
+                except Exception:
+                        pass
+                try:
+                        os.remove("C:\\multimeshscripting\\input\\16.stl")
+                except Exception:
+                        pass
+                try:
+                        os.remove("C:\\multimeshscripting\\input\\17.stl")
+                except Exception:
+                        pass
+                try:
+                        os.remove("C:\\multimeshscripting\\input\\18.stl")
+                except Exception:
+                        pass
+                self.lbl["text"]= "Compactando arquivos... 90%"
+                self.progress["value"]= 90
+                self.temp.update()
+                time.sleep(1)
+                for i in os.listdir(self.master.path):
+                        if(".avi" in i):
+                                continue
+                        else:
+                                filestozip.append(self.master.path + "\\" + i)
+
+                dtsetup= date.today()
+                self.ttsetup= self.master.tsetup.replace(" ","_")
+                dtsetup= self.ttsetup + f"_{dtsetup.day}_{dtsetup.month}_{dtsetup.year}"
+                
+                filezip= zipfile.ZipFile(self.master.path + f"\\{dtsetup}.zip", 'w')
+
+                for f in filestozip:
+                        k= f.split("\\")
+                        fname= k[len(k) - 1]
+                        filezip.write(f,fname, compress_type = zipfile.ZIP_DEFLATED)
+                filezip.close()
+                self.temp.destroy()
+                
+                
+                
 k = Book(1104,1600,(255,255,255),40)
 
 
