@@ -305,42 +305,43 @@ class ConvertSTLs:
                 time.sleep(1)
                 self.processSTL()
         def processSTL(self):
+                documents= os.environ["USERPROFILE"] + "\\Documents"
                 filestozip= []
                 try:
-                        os.rename(self.master.path + "\\15.stl","C:\\multimeshscripting\\input\\15.stl")
+                        os.rename(self.master.path + "\\15.stl",f"{documents}\\multimeshscripting\\input\\15.stl")
                 except Exception:
                         pass
                 try:
-                        os.rename(self.master.path + "\\16.stl","C:\\multimeshscripting\\input\\16.stl")
+                        os.rename(self.master.path + "\\16.stl",f"{documents}\\multimeshscripting\\input\\16.stl")
                 except Exception:
                         pass
                 try:
-                        os.rename(self.master.path + "\\17.stl","C:\\multimeshscripting\\input\\17.stl")
+                        os.rename(self.master.path + "\\17.stl",f"{documents}\\multimeshscripting\\input\\17.stl")
                 except Exception:
                         pass
                 try:
-                        os.rename(self.master.path + "\\18.stl","C:\\multimeshscripting\\input\\18.stl")
+                        os.rename(self.master.path + "\\18.stl",f"{documents}\\multimeshscripting\\input\\18.stl")
                 except Exception:
                         pass
-                os.system("C:\\multimeshscripting\\runMLXScript.bat")
+                os.system(f"{documents}\\multimeshscripting\\runMLXScript.bat")
                 self.lbl["text"]= "Renomeando e convertendo STLs... 50%"
                 self.progress["value"]= 50
                 self.temp.update()
                 time.sleep(1)
                 try:
-                        os.rename("C:\\multimeshscripting\\output\\15.stl",self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
+                        os.rename(f"{documents}\\multimeshscripting\\output\\15.stl",self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 try:
-                        os.rename("C:\\multimeshscripting\\output\\16.stl",self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
+                        os.rename(f"{documents}\\multimeshscripting\\output\\16.stl",self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 try:
-                        os.rename("C:\\multimeshscripting\\output\\17.stl",self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
+                        os.rename(f"{documents}\\multimeshscripting\\output\\17.stl",self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 try:
-                        os.rename("C:\\multimeshscripting\\output\\18.stl",self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
+                        os.rename(f"{documents}\\multimeshscripting\\output\\18.stl",self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 self.lbl["text"]= "Renomeando e convertendo STLs... 70%"
@@ -348,19 +349,19 @@ class ConvertSTLs:
                 self.temp.update()
                 time.sleep(1)
                 try:
-                        os.remove("C:\\multimeshscripting\\input\\15.stl")
+                        os.remove(f"{documents}\\multimeshscripting\\input\\15.stl")
                 except Exception:
                         pass
                 try:
-                        os.remove("C:\\multimeshscripting\\input\\16.stl")
+                        os.remove(f"{documents}\\multimeshscripting\\input\\16.stl")
                 except Exception:
                         pass
                 try:
-                        os.remove("C:\\multimeshscripting\\input\\17.stl")
+                        os.remove(f"{documents}\\multimeshscripting\\input\\17.stl")
                 except Exception:
                         pass
                 try:
-                        os.remove("C:\\multimeshscripting\\input\\18.stl")
+                        os.remove(f"{documents}\\multimeshscripting\\input\\18.stl")
                 except Exception:
                         pass
                 self.lbl["text"]= "Compactando arquivos... 90%"
