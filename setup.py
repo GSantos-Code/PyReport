@@ -1,5 +1,6 @@
 from cx_Freeze import setup, Executable
 import sys
+import os
 
 exe = Executable(
       script="utils2.py",
@@ -14,12 +15,12 @@ setup(
       description="Copyright 2021",
       executables=[exe],
       scripts=[
-               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\Capture.py',
-               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\functions.py',
-               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\main.py',
-               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\utils.py',
-               r'C:\Users\gabriel.azevedo\Desktop\PyReport-1366X768\ConvGIF.py'
+               os. getcwd()+ '\\Capture.py',
+               os. getcwd()+ '\\functions.py',
+               os. getcwd()+ '\\main.py',
+               os. getcwd()+ '\\utils.py',
+               os. getcwd()+ '\\ConvGIF.py'
+               
                ],
-      options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts"),("tools","tools")],
-                                        'packages': ['moviepy', 'numpy', 'scipy', 'cv2', 'PIL']}}
+      options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts"),("tools","tools")]}}
       ) 

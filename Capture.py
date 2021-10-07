@@ -1,14 +1,11 @@
 import functions as f
 import pyautogui as p
-from tkinter import *
-import tkinter as tt
-from tkinter import ttk
-import os
 import sys
 
 class CaptureView(f.functions):
-    def __init__(self,path):
+    def __init__(self,path,master):
         self.path= path
+        self.master= master
         super().__init__()
         self.capture()
     def capture(self):
@@ -29,5 +26,4 @@ class CaptureView(f.functions):
             self.captOclInf("ipr")
         quest= p.confirm(title="Tem Estagiamento?", text="", buttons=["SIM","NAO"])
         self.estCapt(quest,arcs)
-
 

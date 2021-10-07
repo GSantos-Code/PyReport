@@ -26,7 +26,7 @@ class PyReport(utils.auxtools):
                 self.btn= Button(self.frame, relief= FLAT, text="Proximo" ,font="Arial 20", bg="green", fg="white" ,command=self.step0)
                 self.btn.pack(pady="10px",side=BOTTOM)
                 self.i.mainloop()
-                super().__init__(self.path + "/" + pdfname)
+                super().__init__(self.path + f"/14 - Relatorio de Instrucoes {self.tsetup} - {self.paciente}")
         def clear(self):
                 self.entrada1.delete(0,END)
                 self.entrada2.delete(0,END)
@@ -40,6 +40,8 @@ class PyReport(utils.auxtools):
                 self.btn["command"] = self.step2
         def step2(self):
                 self.path= self.entrada1.get()
+                self.tsetup= self.path.split("\\")
+                self.tsetup= self.tsetup[len(self.tsetup) - 1]
                 self.clear()
                 self.lb1["text"]= "Nome do Ortodontista"
                 self.lb2["text"]= "Face Vestibular"

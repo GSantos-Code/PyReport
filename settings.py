@@ -25,17 +25,17 @@ class settings:
             if(arcs == "Superior" or arcs == "Ambas"):
                 p.click(1144,75)
                 t.sleep(2)
-                p.screenshot(region=(253,50,871,369)).save(path + "9.png")
+                p.screenshot(region=(253,50,871,369)).save(path + f"09 - Estagiamento {self.master.sup} Superior - {self.master.tsetup}.png")
             if(arcs == "Inferior" or arcs == "Ambas"):
                 p.click(1141,359)
                 p.click(486,12)
                 t.sleep(2)
-                p.screenshot(region=(253,97,865,320)).save(path + "10.png")
+                p.screenshot(region=(253,97,865,320)).save(path + f"10 - Estagiamento {self.master.inf} Inferior - {self.master.tsetup}.png")
         p.click(1134,12)
         p.click(354,71)
         t.sleep(4)
-        p.screenshot(region=(3,32,1129,620)).save(path + "11.png")
-        p.alert(title="Tela Liberada!", text="Tela Liberada!")
+        p.screenshot(region=(3,32,1129,620)).save(path + f"11 - Tabela de Movimentacao - {self.master.tsetup}.png")
+        p.alert(title="Sucess", text="Script Executado com sucesso!")
     def modelAc(self):
         p.press("pagedown")
         p.press("enter", presses=3)
