@@ -109,19 +109,19 @@ class Book(main.PyReport):
                 self.conv= ConvGIF(self)
                 self.convertstls= ConvertSTLs(self)'''
         def Capturas(self):
-                capture= Capture.CaptureView(self.pathc, self)
                 self.disp.destroy()
+                capture= Capture.CaptureView(self.pathc, self)
         def OtAVI(self):
+                self.disp.destroy()
                 self.conv= ConvGIF(self)
-                self.disp.destroy()
         def OtSTL(self):
-                self.convertstls= ConvertSTLs(self)
                 self.disp.destroy()
+                self.convertstls= ConvertSTLs(self)
         def Padrao(self):
+                self.disp.destroy()
                 capture= Capture.CaptureView(self.pathc, self)
                 self.conv= ConvGIF(self)
                 self.convertstls= ConvertSTLs(self)
-                self.disp.destroy()
         def cRect(self,coords,bg):
                 self.draw.rectangle(coords,fill=bg)
         def Paragraph(self,txt):
