@@ -92,7 +92,34 @@ class Book(main.PyReport):
                 self.Textc("Consulte as informações completas na Ficha de Instruções",(255,255,255),["c",height-70], 40)
                 self.book.save(self.path + f"\\12 - Resumo de {self.tsetup} - {self.paciente}.png")
                 path= self.path
-                capture= Capture.CaptureView(path, self)
+                self.disp= Tk()
+                self.pathc= path
+                self.disp.title("O que vamos fazer?")
+                self.btn= Button(self.disp, bg="red", text="Capturas", fg="white", relief="flat", font="Arial 15", command= self.Capturas)
+                self.btn.pack(pady="3px")
+                self.btn1= Button(self.disp, bg="purple", text="Converter GIFs", fg="white", relief="flat", font="Arial 15", command= self.OtAVI)
+                self.btn1.pack(pady="3px")
+                self.btn2= Button(self.disp, bg="green", text="Otimizar STLs", fg="white", relief="flat", font="Arial 15", command= self.OtSTL)
+                self.btn2.pack(pady="3px")
+                self.btn3= Button(self.disp, bg="pink", text="Padrão", fg="white", relief="flat", font="Arial 15", command= self.Padrao)
+                self.btn3.pack(pady="3px")
+                self.disp.config(bg="orange",padx="50px", pady="20px")
+                self.disp.mainloop()
+                '''capture= Capture.CaptureView(path, self)
+                self.conv= ConvGIF(self)
+                self.convertstls= ConvertSTLs(self)'''
+        def Capturas(self):
+                self.disp.destroy()
+                capture= Capture.CaptureView(self.pathc, self)
+        def OtAVI(self):
+                self.disp.destroy()
+                self.conv= ConvGIF(self)
+        def OtSTL(self):
+                self.disp.destroy()
+                self.convertstls= ConvertSTLs(self)
+        def Padrao(self):
+                self.disp.destroy()
+                capture= Capture.CaptureView(self.pathc, self)
                 self.conv= ConvGIF(self)
                 self.convertstls= ConvertSTLs(self)
         def cRect(self,coords,bg):
@@ -306,7 +333,7 @@ class ConvertSTLs:
                 time.sleep(1)
                 self.processSTL()
         def getSTL(self, model):
-                return f'"C:\Program Files\VCG\MeshLab\meshlabserver.exe" -i {self.master.path}\{model} -o {self.master.path}\{model} -s C:\multimeshscripting\scripts\simple_script.mlx -om vc fq wn'
+                return f'"C:\Program Files\VCG\MeshLab\meshlabserver.exe" -i "{self.master.path}\{model}" -o "{self.master.path}\{model}" -s C:\multimeshscripting\scripts\simple_script.mlx -om vc fq wn'
         def processSTL(self):
                 DETACHED_PROCESS = 0x00000008
                 script= self.getSTL("15.stl")
