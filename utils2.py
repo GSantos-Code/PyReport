@@ -6,6 +6,7 @@ from datetime import date
 import zipfile
 import time
 import re
+import subprocess
 import tkinter as tt
 from tkinter import ttk
 from tkinter import Tk, Text, Button, END, Label
@@ -304,66 +305,40 @@ class ConvertSTLs:
                 self.temp.update()
                 time.sleep(1)
                 self.processSTL()
+        def getSTL(self, model):
+                return f'"C:\Program Files\VCG\MeshLab\meshlabserver.exe" -i {self.master.path}\{model} -o {self.master.path}\{model} -s C:\multimeshscripting\scripts\simple_script.mlx -om vc fq wn'
         def processSTL(self):
-                documents= os.environ["USERPROFILE"] + "\\Documents"
+                DETACHED_PROCESS = 0x00000008
+                script= self.getSTL("15.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\15.stl", self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                script= self.getSTL("16.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\16.stl", self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                script= self.getSTL("17.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\17.stl", self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                script= self.getSTL("18.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\18.stl", self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
                 filestozip= []
-                try:
-                        os.rename(self.master.path + "\\15.stl",f"{documents}\\multimeshscripting\\input\\15.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(self.master.path + "\\16.stl",f"{documents}\\multimeshscripting\\input\\16.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(self.master.path + "\\17.stl",f"{documents}\\multimeshscripting\\input\\17.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(self.master.path + "\\18.stl",f"{documents}\\multimeshscripting\\input\\18.stl")
-                except Exception:
-                        pass
-                os.system(f"{documents}\\multimeshscripting\\runMLXScript.bat")
-                self.lbl["text"]= "Renomeando e convertendo STLs... 50%"
-                self.progress["value"]= 50
-                self.temp.update()
-                time.sleep(1)
-                try:
-                        os.rename(f"{documents}\\multimeshscripting\\output\\15.stl",self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(f"{documents}\\multimeshscripting\\output\\16.stl",self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(f"{documents}\\multimeshscripting\\output\\17.stl",self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(f"{documents}\\multimeshscripting\\output\\18.stl",self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
                 self.lbl["text"]= "Renomeando e convertendo STLs... 70%"
                 self.progress["value"]= 70
                 self.temp.update()
                 time.sleep(1)
-                try:
-                        os.remove(f"{documents}\\multimeshscripting\\input\\15.stl")
-                except Exception:
-                        pass
-                try:
-                        os.remove(f"{documents}\\multimeshscripting\\input\\16.stl")
-                except Exception:
-                        pass
-                try:
-                        os.remove(f"{documents}\\multimeshscripting\\input\\17.stl")
-                except Exception:
-                        pass
-                try:
-                        os.remove(f"{documents}\\multimeshscripting\\input\\18.stl")
-                except Exception:
-                        pass
+                
                 self.lbl["text"]= "Compactando arquivos... 90%"
                 self.progress["value"]= 90
                 self.temp.update()
@@ -390,5 +365,6 @@ class ConvertSTLs:
                 
                 
 k = Book(1104,1600,(255,255,255),40)
+
 
 
