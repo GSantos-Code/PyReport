@@ -6,6 +6,7 @@ from datetime import date
 import zipfile
 import time
 import re
+import subprocess
 import tkinter as tt
 from tkinter import ttk
 from tkinter import Tk, Text, Button, END, Label
@@ -21,7 +22,7 @@ class Book(main.PyReport):
                 self.width= width
                 self.Y= 400
                 self.tam= 35
-                self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
+                self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600x900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
                 self.padx= padx
                 self.height= height
                 auxdent= self.dentista.split(" ")
@@ -43,7 +44,7 @@ class Book(main.PyReport):
                 self.draw= ImageDraw.Draw(self.book)
                 self.cRect((0,0,self.width,int(340)),(31,91,141))
                 self.Textc("Resumo Setup Virtual",(255,255,255),["c",230], 60)
-                self.img("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\imgs\\OrthoAligner.png",-7,center= ["c",-60])
+                self.img("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\imgs\\OrthoAligner.png",-7,center= ["c",-60])
                 texto= "O Setup Virtual para < {paciente} > foi planejado conforme suas instruções."
                 if("a" in self.comment):
                 	texto += " <break> <break> " + self.comment + " <break> "
@@ -117,15 +118,15 @@ class Book(main.PyReport):
         						i = i.replace("<break>","")
         						print(i)
         				elif(i == "<"):
-        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial-Bold.ttf",self.tam)
+        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\fonts\\Arial-Bold.ttf",self.tam)
         				elif(i == ">"):
-        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
+        						self.fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",self.tam)
         				else:
         						self.draw.text((cont, self.Y),i,fill= (0,0,0),font= self.fonte)
         						print(cont, cursor)
         						cont= cont + cursor[0] + 10
         def Textc(self,txt,color,c,tam):
-                fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1366X768\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",tam)
+                fonte= ImageFont.truetype("C:\\Program Files\\PyReport-1600X900\\build\\exe.win-amd64-3.9\\fonts\\Arial.ttf",tam)
                 if("c" in c):
                 	x= self.draw.textlength(txt, font= fonte)
                 	self.draw.text((int((self.width-x)/2),c[1]),txt,fill=color,font=fonte)
@@ -304,65 +305,40 @@ class ConvertSTLs:
                 self.temp.update()
                 time.sleep(1)
                 self.processSTL()
+        def getSTL(self, model):
+                return f'"C:\Program Files\VCG\MeshLab\meshlabserver.exe" -i {self.master.path}\{model} -o {self.master.path}\{model} -s C:\multimeshscripting\scripts\simple_script.mlx -om vc fq wn'
         def processSTL(self):
+                DETACHED_PROCESS = 0x00000008
+                script= self.getSTL("15.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\15.stl", self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                script= self.getSTL("16.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\16.stl", self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                script= self.getSTL("17.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\17.stl", self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
+                script= self.getSTL("18.stl")
+                try:
+                        subprocess.call(script, creationflags=DETACHED_PROCESS)
+                        os.rename(self.master.path + "\\18.stl", self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
+                except Exception:
+                        pass
                 filestozip= []
-                try:
-                        os.rename(self.master.path + "\\15.stl","C:\\multimeshscripting\\input\\15.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(self.master.path + "\\16.stl","C:\\multimeshscripting\\input\\16.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(self.master.path + "\\17.stl","C:\\multimeshscripting\\input\\17.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename(self.master.path + "\\18.stl","C:\\multimeshscripting\\input\\18.stl")
-                except Exception:
-                        pass
-                os.system("C:\\multimeshscripting\\runMLXScript.bat")
-                self.lbl["text"]= "Renomeando e convertendo STLs... 50%"
-                self.progress["value"]= 50
-                self.temp.update()
-                time.sleep(1)
-                try:
-                        os.rename("C:\\multimeshscripting\\output\\15.stl",self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename("C:\\multimeshscripting\\output\\16.stl",self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename("C:\\multimeshscripting\\output\\17.stl",self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
-                try:
-                        os.rename("C:\\multimeshscripting\\output\\18.stl",self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
-                except Exception:
-                        pass
                 self.lbl["text"]= "Renomeando e convertendo STLs... 70%"
                 self.progress["value"]= 70
                 self.temp.update()
                 time.sleep(1)
-                try:
-                        os.remove("C:\\multimeshscripting\\input\\15.stl")
-                except Exception:
-                        pass
-                try:
-                        os.remove("C:\\multimeshscripting\\input\\16.stl")
-                except Exception:
-                        pass
-                try:
-                        os.remove("C:\\multimeshscripting\\input\\17.stl")
-                except Exception:
-                        pass
-                try:
-                        os.remove("C:\\multimeshscripting\\input\\18.stl")
-                except Exception:
-                        pass
+                
                 self.lbl["text"]= "Compactando arquivos... 90%"
                 self.progress["value"]= 90
                 self.temp.update()
@@ -389,5 +365,6 @@ class ConvertSTLs:
                 
                 
 k = Book(1104,1600,(255,255,255),40)
+
 
 
