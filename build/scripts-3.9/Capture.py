@@ -18,6 +18,8 @@ class CaptureView(f.functions):
             self.captRight90()
             self.captRight45()
             op= p.confirm(title="Deu tudo certo?", text="", buttons=["Sim","Não"])
+            if(op == "Sim"):
+                break
         if(arcs == "Superior" or arcs == "Ambas"):
             self.captOclSup("sup")
             self.captOclSup("sob")
