@@ -10,12 +10,14 @@ class CaptureView(f.functions):
         self.capture()
     def capture(self):
         arcs= p.confirm(title="Escolha as arcadas", text="", buttons=["Superior","Inferior","Ambas"])
-        self.captFront()
-        self.captBack()
-        self.captLeft90()
-        self.captLeft45()
-        self.captRight90()
-        self.captRight45()
+        while True:
+            self.captFront()
+            self.captBack()
+            self.captLeft90()
+            self.captLeft45()
+            self.captRight90()
+            self.captRight45()
+            op= p.confirm(title="Deu tudo certo?", text="", buttons=["Sim","Não"])
         if(arcs == "Superior" or arcs == "Ambas"):
             self.captOclSup("sup")
             self.captOclSup("sob")
