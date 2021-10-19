@@ -2,6 +2,7 @@ from PIL import ImageDraw, Image, ImageFont
 import textwrap
 from ConvGIF import ConvGIF as GIFcv
 import os
+import shutil
 from datetime import date
 import zipfile
 import time
@@ -337,32 +338,32 @@ class ConvertSTLs:
                 if(not(os.path.exists(f"{os.environ['USERPROFILE']}\\Documents\\Convert"))):
                         os.mkdir(f"{os.environ['USERPROFILE']}\\Documents\\Convert")
                 self.localdoc= f"{os.environ['USERPROFILE']}\\Documents\\Convert"
-                os.rename(f"{self.master.path}\\{model}",f"{self.localdoc}\\{model}")
+                shutil.move(f"{self.master.path}\\{model}",f"{self.localdoc}\\{model}")
                 return f'"C:\Program Files\VCG\MeshLab\meshlabserver.exe" -i "{self.localdoc}\{model}" -o "{self.localdoc}\{model}" -s C:\multimeshscripting\scripts\simple_script.mlx -om vc fq wn'
         def processSTL(self):
                 DETACHED_PROCESS = 0x00000008
                 script= self.getSTL("15.stl")
                 try:
                         subprocess.call(script, creationflags=DETACHED_PROCESS)
-                        os.rename(self.localdoc + "\\15.stl", self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
+                        shutil.move(self.localdoc + "\\15.stl", self.master.path + f"\\15 - Modelo Original Superior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 script= self.getSTL("16.stl")
                 try:
                         subprocess.call(script, creationflags=DETACHED_PROCESS)
-                        os.rename(self.localdoc + "\\16.stl", self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
+                        shutil.move(self.localdoc + "\\16.stl", self.master.path + f"\\16 - Modelo Original Inferior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 script= self.getSTL("17.stl")
                 try:
                         subprocess.call(script, creationflags=DETACHED_PROCESS)
-                        os.rename(self.localdoc + "\\17.stl", self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
+                        shutil.move(self.localdoc + "\\17.stl", self.master.path + f"\\17 - Modelo {self.master.tsetup} Superior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 script= self.getSTL("18.stl")
                 try:
                         subprocess.call(script, creationflags=DETACHED_PROCESS)
-                        os.rename(self.localdoc + "\\18.stl", self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
+                        shutil.move(self.localdoc + "\\18.stl", self.master.path + f"\\18 - Modelo {self.master.tsetup} Inferior - {self.master.paciente}.stl")
                 except Exception:
                         pass
                 filestozip= []
