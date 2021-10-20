@@ -3,6 +3,8 @@ import pyautogui as p
 import time as t
 from tkinter import *
 import os
+import win32api
+import win32gui
 
 class functions(s.settings):
     def __init__(self):
@@ -105,11 +107,28 @@ class functions(s.settings):
         else:
             p.click(1536,88)
     def captFront(self):
+        aux= 0
+        dc = win32gui.GetDC(0)
+        win32gui.MoveToEx(dc,0,0)
+        win32gui.LineTo(dc,0,1600)
         p.click(1569,417)
-        p.alert(title="Atenção", text="Ajuste a posição inicial")
+        
+        p.alert(title="Atenção", text="Ajuste a posição inicial, alinhe com a linha desenhada na tela")
+        #Pega o contexto gráfico para o Desktop
+        dc = win32gui.GetDC(0)
+        #Desenha uma linha do ponto (0,0) até (1366,768)
+        while True:
+            win32gui.MoveToEx(dc,0,391)
+            win32gui.LineTo(dc,1600,391)
+            aux += 1
+            print(aux)
+            if(aux == 120):
+                break
         t.sleep(3)
         self.Photo("Vista Oclusao Anterior")
     def captBack(self):
+        p.moveTo(700,391)
+        p.moveTo(700,391)
         p.moveTo(700,391)
         p.mouseDown(button="RIGHT")
         p.moveTo(1067,391)
@@ -155,8 +174,16 @@ class functions(s.settings):
             self.Transp("on")
             self.IPR("on")
             self.IPRPhoto("sup")
-    def captOclInf(self,op):
-        if(op == "inf"):
+    def captOclInf(self,op, arcs):
+        if(op == "inf" and arcs == "Inferior"):
+            t.sleep(3)
+            self.Menu("Oinf")
+            self.Max("off")
+            self.Mand("on")
+            p.alert(title="Atenção", text="Ajuste a posição inferior")
+            t.sleep(3)
+            self.Photo("Vista Oclusal Inferior")
+        elif(op == "inf" and arcs == "Ambas"):
             t.sleep(3)
             self.IPR("off")
             self.Menu("Oinf")

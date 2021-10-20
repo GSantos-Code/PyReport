@@ -6,6 +6,7 @@ import shutil
 from datetime import date
 import zipfile
 import time
+import datetime
 import re
 import subprocess
 import tkinter as tt
@@ -17,7 +18,13 @@ import sys
 
 class Book(main.PyReport):
         def __init__(self, width, height, bg, padx):
-                super().__init__("14")
+                self.data= datetime.date.today()
+                self.data= str(self.data.day) + "-" + str(self.data.month) + "-" + str(self.data.year)
+                self.log= open("status.log","a+")
+                try:
+                        super().__init__("14")
+                except Exception:
+                        self.Reg("Erro no Formulário\n")
                 self.calc= 1
                 auxv= 0
                 self.width= width
@@ -106,26 +113,43 @@ class Book(main.PyReport):
                 self.btn3.pack(pady="3px")
                 self.disp.config(bg="orange",padx="50px", pady="20px")
                 self.disp.mainloop()
-                '''capture= Capture.CaptureView(path, self)
-                self.conv= ConvGIF(self)
-                self.convertstls= ConvertSTLs(self)'''
+                self.log.close()
         def Capturas(self):
                 self.disp.destroy()
-                capture= Capture.CaptureView(self.pathc, self)
+                try:
+                        capture= Capture.CaptureView(self.pathc, self)
+                except Exception:
+                        self.Reg("Capture error")
         def OtAVI(self):
                 self.disp.destroy()
-                self.conv= ConvGIF(self)
-                self.convertstls= ConvertSTLs(self)
+                try:
+                        self.conv= ConvGIF(self)
+                except Exception:
+                        self.Reg("Error in convert GIFS")
         def OtSTL(self):
                 self.disp.destroy()
-                self.convertstls= ConvertSTLs(self)
+                try:
+                        self.convertstls= ConvertSTLs(self)
+                except Exception:
+                        self.Reg("Error in convert STLs")
         def Padrao(self):
                 self.disp.destroy()
-                capture= Capture.CaptureView(self.pathc, self)
-                self.conv= ConvGIF(self)
-                self.convertstls= ConvertSTLs(self)
+                try:
+                        capture= Capture.CaptureView(self.pathc, self)
+                except Exception:
+                        self.Reg("Capture error")
+                try:
+                        self.conv= ConvGIF(self)
+                except Exception:
+                        self.Reg("Error in convert GIFS")
+                try:
+                        self.convertstls= ConvertSTLs(self)
+                except Exception:
+                        self.Reg("Error in convert STLs")
         def cRect(self,coords,bg):
                 self.draw.rectangle(coords,fill=bg)
+        def Reg(self,text):
+                self.log.write(self.data + " - " + text)
         def Paragraph(self,txt):
         		temp= " "
         		cont= 40

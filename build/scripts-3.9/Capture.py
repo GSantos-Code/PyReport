@@ -25,9 +25,9 @@ class CaptureView(f.functions):
             self.captOclSup("sob")
             self.captOclSup("ipr")
         if(arcs == "Inferior" or arcs == "Ambas"):
-            self.captOclInf("inf")
-            self.captOclInf("sob")
-            self.captOclInf("ipr")
+            self.captOclInf("inf",arcs)
+            self.captOclInf("sob",arcs)
+            self.captOclInf("ipr",arcs)
         quest= p.confirm(title="Tem Estagiamento?", text="", buttons=["SIM","NAO"])
         self.estCapt(quest,arcs)
 
