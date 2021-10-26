@@ -35,11 +35,11 @@ class PyReport(utils.auxtools):
                 self.dentista= self.entrada2.get()
                 self.clear()
                 self.lb1["text"]= "Digite o Caminho da Pasta"
-                self.lb2.pack_forget()
-                self.entrada2.pack_forget()
+                self.lb2["text"]= "Digite o número da OS:"
                 self.btn["command"] = self.step2
         def step2(self):
                 self.path= self.entrada1.get()
+                self.OS= self.entrada2.get()
                 self.tsetup= self.path.split("\\")
                 self.tsetup= self.tsetup[len(self.tsetup) - 1]
                 self.clear()

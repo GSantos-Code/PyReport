@@ -19,8 +19,8 @@ setup(
                os. getcwd()+ '\\functions.py',
                os. getcwd()+ '\\main.py',
                os. getcwd()+ '\\utils.py',
-               os. getcwd()+ '\\ConvGIF.py'
-               
+               os. getcwd()+ '\\ConvGIF.py',
+               os. getcwd()+ '\\IPR.py'
                ],
       options = {'build_exe': {'include_files': [("imgs","imgs"),("fonts","fonts"),("tools","tools")]}}
       ) 

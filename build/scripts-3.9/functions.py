@@ -66,9 +66,21 @@ class functions(s.settings):
         return x
     def IPRPhoto(self,op):
         p.PAUSE= 0.2
+        aux= 0
+        dc = win32gui.GetDC(0)
         if(op == "sup"):
             p.alert(title="Atenção", text="Você tem 13 segundos para marcar o IPR")
             t.sleep(13)
+            p.alert(title="Ajuste a posição", text="Ajuste a posição para o Relatório de IPR(se houver)")
+            while True:
+                win32gui.MoveToEx(dc,0,100)
+                win32gui.LineTo(dc,1600,100)
+                win32gui.MoveToEx(dc,0,700)
+                win32gui.LineTo(dc,1600,700)
+                aux += 1
+                print(aux)
+                if(aux == 120):
+                    break
             x= self.question()
             if(x == "SIM"):
                 self.Photo("Vista Oclusal Superior com indicacao IPR")
@@ -77,6 +89,16 @@ class functions(s.settings):
         else:
             p.alert(title="Atenção", text="Você tem 13 segundos para marcar o IPR")
             t.sleep(13)
+            p.alert(title="Ajuste a posição", text="Ajuste a posição para o Relatório de IPR(se houver)")
+            while True:
+                win32gui.MoveToEx(dc,0,100)
+                win32gui.LineTo(dc,1600,100)
+                win32gui.MoveToEx(dc,0,700)
+                win32gui.LineTo(dc,1600,700)
+                aux += 1
+                print(aux)
+                if(aux == 120):
+                    break
             x= self.question()
             if(x == "SIM"):
                 self.Photo("Vista Oclusal Inferior com indicacao IPR")

@@ -1,7 +1,8 @@
-from PIL import ImageDraw, Image, ImageFont
 import textwrap
 from ConvGIF import ConvGIF as GIFcv
 import os
+from IPR import *
+from PIL import ImageDraw, Image, ImageFont
 import shutil
 from datetime import date
 import zipfile
@@ -124,6 +125,7 @@ class Book(main.PyReport):
                 self.disp.destroy()
                 try:
                         self.conv= ConvGIF(self)
+                        self.OtSTL()
                 except Exception:
                         self.Reg("Error in convert GIFS")
         def OtSTL(self):
@@ -338,13 +340,7 @@ class ConvertSTLs:
                 except Exception:
                         pass
                 if(self.op == "Y"):
-                        try:
-                                os.rename(self.master.path + "\\7.png",self.master.path + f"\\07 - Relatorio de IPR {self.master.tsetup} - {self.master.paciente}.png")
-                        except Exception:
-                                try:
-                                        os.rename(self.master.path + "\\7.jpg",self.master.path + f"\\07 - Relatorio de IPR {self.master.tsetup} - {self.master.paciente}.jpg")                
-                                except Exception:
-                                        pass
+                        x= Report(self.master,self)
                 else:
                         try:
                                 os.rename(self.master.path + "\\7.png",self.master.path + f"\\07 - Vista Frontal - {self.master.tsetup}.png")
@@ -353,6 +349,8 @@ class ConvertSTLs:
                                         os.rename(self.master.path + "\\7.jpg",self.master.path + f"\\07 - Vista Frontal - {self.master.tsetup}.jpg")
                                 except Exception:
                                         pass
+        def renamePart2(self):
+                print("Passou")
                 self.lbl["text"]= "Renomeando e convertendo STLs... 20%"
                 self.progress["value"]= 20
                 self.temp.update()
