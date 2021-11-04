@@ -3,6 +3,8 @@ import pyautogui as p
 import time as t
 from tkinter import *
 import os
+import win32api
+import win32gui
 
 class functions(s.settings):
     def __init__(self):
@@ -26,6 +28,7 @@ class functions(s.settings):
             p.click(40,285, clicks=4)
             p.click(237,408)
             t.sleep(3)
+            self.Transp("on")
             self.Dist("on")
         else:
             p.PAUSE=0.5
@@ -62,9 +65,21 @@ class functions(s.settings):
         return x
     def IPRPhoto(self,op):
         p.PAUSE= 0.2
+        aux= 0
+        dc = win32gui.GetDC(0)
         if(op == "sup"):
             p.alert(title="Atenção", text="Você tem 13 segundos para marcar o IPR")
             t.sleep(13)
+            p.alert(title="Ajuste a posição", text="Ajuste a posição para o Relatório de IPR(se houver)")
+            while True:
+                win32gui.MoveToEx(dc,0,85)
+                win32gui.LineTo(dc,1366,85)
+                win32gui.MoveToEx(dc,0,597)
+                win32gui.LineTo(dc,1366,597)
+                aux += 1
+                print(aux)
+                if(aux == 120):
+                    break
             x= self.question()
             if(x == "SIM"):
                 self.Photo("Vista Oclusal Superior com indicacao IPR")
@@ -73,6 +88,16 @@ class functions(s.settings):
         else:
             p.alert(title="Atenção", text="Você tem 13 segundos para marcar o IPR")
             t.sleep(13)
+            p.alert(title="Ajuste a posição", text="Ajuste a posição para o Relatório de IPR(se houver)")
+            while True:
+                win32gui.MoveToEx(dc,0,85)
+                win32gui.LineTo(dc,1366,85)
+                win32gui.MoveToEx(dc,0,597)
+                win32gui.LineTo(dc,1366,597)
+                aux += 1
+                print(aux)
+                if(aux == 120):
+                    break
             x= self.question()
             if(x == "SIM"):
                 self.Photo("Vista Oclusal Inferior com indicacao IPR")
@@ -103,11 +128,28 @@ class functions(s.settings):
         else:
             p.click(1301,89)
     def captFront(self):
+        aux= 0
+        dc = win32gui.GetDC(0)
+        win32gui.MoveToEx(dc,0,0)
+        win32gui.LineTo(dc,0,1366)
         p.click(1340,423)
-        p.alert(title="Atenção", text="Ajuste a posição inicial")
+        
+        p.alert(title="Atenção", text="Ajuste a posição inicial, alinhe com a linha desenhada na tela")
+        #Pega o contexto gráfico para o Desktop
+        dc = win32gui.GetDC(0)
+        #Desenha uma linha do ponto (0,0) até (1366,768)
+        while True:
+            win32gui.MoveToEx(dc,0,321)
+            win32gui.LineTo(dc,1366,321)
+            aux += 1
+            print(aux)
+            if(aux == 120):
+                break
         t.sleep(3)
         self.Photo("Vista Oclusao Anterior")
     def captBack(self):
+        p.moveTo(700,321)
+        p.moveTo(700,321)
         p.moveTo(700,321)
         p.mouseDown(button="RIGHT")
         p.moveTo(1054,321)
@@ -153,8 +195,16 @@ class functions(s.settings):
             self.Transp("on")
             self.IPR("on")
             self.IPRPhoto("sup")
-    def captOclInf(self,op):
-        if(op == "inf"):
+    def captOclInf(self,op, arcs):
+        if(op == "inf" and arcs == "Inferior"):
+            t.sleep(3)
+            self.Menu("Oinf")
+            self.Max("off")
+            self.Mand("on")
+            p.alert(title="Atenção", text="Ajuste a posição inferior")
+            t.sleep(3)
+            self.Photo("Vista Oclusal Inferior")
+        elif(op == "inf" and arcs == "Ambas"):
             t.sleep(3)
             self.IPR("off")
             self.Menu("Oinf")
@@ -168,6 +218,9 @@ class functions(s.settings):
             self.SobreposPhoto("inf")
         else:
             self.Sobrepos("off")
+            p.click(39,434)
+            p.click(256,156)
+            self.DownMenu()
             self.IPR("on")
             self.IPRPhoto("inf")
     
