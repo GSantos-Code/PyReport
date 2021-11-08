@@ -135,8 +135,8 @@ class Report:
             self.display.update()
         print(f'{self.form.path}\\07 - Relatorio de IPR {self.form.tsetup} - {self.form.paciente}.png')
         shutil.move(f"{self.dtemp}\\7.png",f'{self.form.path}\\07 - Relatorio de IPR {self.form.tsetup} - {self.form.paciente}.png')
-        os.remove(f"{self.form.path}\\Superior.jpg")
-        os.remove(f"{self.form.path}\\Inferior.jpg")
+        os.remove(f"{self.form.path}\\S.jpg")
+        os.remove(f"{self.form.path}\\I.jpg")
         self.display.destroy()
         self.pai.renamePart2()
     def Entrys(self,master,txt,x,y):
