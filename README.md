@@ -15,4 +15,4 @@
 <p>- Formatação de entrada</p>
 <p>- Implementação do Relatório 12</p>
 
-<p>Versão atual: V<span id="versaoapp">2.00</span></p>
+<p>Versão atual: V<span id="versaoapp">2.01</span></p>
