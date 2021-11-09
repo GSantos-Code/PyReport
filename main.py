@@ -37,21 +37,44 @@ class PyReport(utils.auxtools):
                 self.lb1["text"]= "Digite o Caminho da Pasta"
                 self.lb2["text"]= "Digite o número da OS:"
                 self.btn["command"] = self.step2
+        def ortochange(self,valor):
+            self.ortodont= valor
         def step2(self):
+                options= ["Diogo Frazao","Alessandra Raid","Cassia dos Anjos","Luisa Dario"]
+                self.ortovar= StringVar(self.i)
+                self.ortovar.set("Escolha um Ortodontista")
                 self.path= self.entrada1.get()
                 self.OS= self.entrada2.get()
+                self.lb2.pack_forget()
+                self.entrada1.pack_forget()
+                self.entrada2.pack_forget()
+                self.btn.pack_forget()
                 self.tsetup= self.path.split("\\")
                 self.tsetup= self.tsetup[len(self.tsetup) - 1]
                 self.clear()
                 self.lb1["text"]= "Nome do Ortodontista"
+                self.orto= OptionMenu(self.frame, self.ortovar, *options, command= self.ortochange)
+                self.orto.configure(bg="orange",font="Arial 20 bold",fg="white")
+                self.orto.pack(pady="10px")
                 self.lb2["text"]= "Face Vestibular"
+                self.lb2.pack()
                 self.btn["command"]= self.step3
+                self.btn.pack()
                 self.btn.pack_forget()
                 self.lb2.pack()
                 self.entrada2.pack()
                 self.btn.pack(pady="10px",side=BOTTOM)
         def step3(self):
-                self.ortodont= self.entrada1.get()
+                self.orto.pack_forget()
+                self.lb1.pack_forget()
+                self.lb2.pack_forget()
+                self.btn.pack_forget()
+                self.entrada2.pack_forget()
+                self.lb1.pack(pady="10px")
+                self.entrada1.pack(pady="10px")
+                self.lb2.pack(pady="10px")
+                self.entrada2.pack(pady="10px")
+                self.btn.pack(pady="10px")
                 self.vest= self.entrada2.get()
                 self.clear()
                 self.lb1["text"]= "Face Lingual"
@@ -84,9 +107,24 @@ class PyReport(utils.auxtools):
                 self.lb1["text"]= "Quant Sup"
                 self.lb2["text"]= "Quant Inf"
                 self.btn["command"]= self.step5
+        def changepkt(self,valor):
+            self.pacote= valor
         def step5(self):
+                options= ["FULL","ONE","PRO","LITE","Fase II","Fase III","Fase IV","Fase V","Refino I","Refino II","Refino III","Refino IV","Refino V","Refino VI"]
+                self.pkt= StringVar(self.i)
+                self.pkt.set("Selecione o pacote")
                 self.sup= self.entrada1.get()
                 self.inf= self.entrada2.get()
+                self.entrada1.pack_forget()
+                self.lb2.pack_forget()
+                self.entrada2.pack_forget()
+                self.btn.pack_forget()
+                self.oppkt= OptionMenu(self.frame, self.pkt, *options, command= self.changepkt)
+                self.oppkt.pack(pady="10px")
+                self.oppkt.configure(bg="orange",fg="white",font="Arial 20 bold")
+                self.lb2.pack(pady="10px")
+                self.entrada2.pack(pady="10px")
+                self.btn.pack(pady="10px")
                 self.clear()
                 self.lb1["text"]= "Qual Pacote"
                 self.lb2["text"]= "Comentário"
@@ -104,7 +142,7 @@ class PyReport(utils.auxtools):
                 self.btn= Button(self.frame2, relief= FLAT, text="Gerar PDF" ,font="Arial 20", bg="green", fg="white" ,command=self.step6)
                 self.btn.pack(pady="10px")
         def step6(self):
-                self.pacote= self.entrada1.get()
+                self.oppkt.pack_forget()
                 self.comment= self.TextArea.get("1.0",END)
                 self.comment= self.comment.replace("\n","|")
                 self.clear()
@@ -113,6 +151,7 @@ class PyReport(utils.auxtools):
                         self.scroll.pack_forget()
                         self.lb2.pack_forget()
                         self.lb1["text"] = "Texto da Validade"
+                        self.entrada1.pack(pady="10px")
                         self.btn["text"]= "Pronto"
                         self.btn["command"] = self.step7
                 else:
