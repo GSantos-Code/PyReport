@@ -40,7 +40,7 @@ class PyReport(utils.auxtools):
         def ortochange(self,valor):
             self.ortodont= valor
         def step2(self):
-                options= ["Diogo Frazao","Alessandra Raid","Cassia dos Anjos","Luisa Dario","Marcos Gribel"]
+                options= ["Diogo Frazao","Bruno Gribel","Alessandra Raid","Cassia dos Anjos","Luisa Dario","Marcos Gribel"]
                 self.ortovar= StringVar(self.i)
                 self.ortovar.set("Escolha um Ortodontista")
                 self.path= self.entrada1.get()
