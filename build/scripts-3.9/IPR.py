@@ -95,25 +95,25 @@ class Report:
             self.desg["I3141"]= "0,0"
             self.colors["CI3141"]= "#000000"
         if(self.TEETH["D26"] == 1 and self.TEETH["D27"] == 0):
-            self.desg["I2627"]= "0,1"
-            self.colors["CI2627"]= "#FF0000"
+            self.desg["I2627"]= "0,0"
+            self.colors["CI2627"]= "#000000"
         if(self.TEETH["D36"] == 1 and self.TEETH["D37"] == 0):
-            self.desg["I3637"]= "0,1"
-            self.colors["CI3637"]= "#FF0000"
+            self.desg["I3637"]= "0,0"
+            self.colors["CI3637"]= "#000000"
         if(self.TEETH["D16"] == 1 and self.TEETH["D17"] == 0):
-            self.desg["I1617"]= "0,1"
-            self.colors["CI1617"]= "#FF0000"
+            self.desg["I1617"]= "0,0"
+            self.colors["CI1617"]= "#000000"
         if(self.TEETH["D46"] == 1 and self.TEETH["D47"] == 0):
-            self.desg["I4647"]= "0,1"
-            self.colors["CI4647"]= "#FF0000"
+            self.desg["I4647"]= "0,0"
+            self.colors["CI4647"]= "#000000"
         self.total.update(self.colors)
         self.total.update(self.desg)
         self.total.update(self.TEETH)
         self.__Generate__()
     def __Generate__(self):
-        with open(self.form.path + "\\Superior.jpg", "rb") as image_file:
+        with open(self.form.path + "\\S.jpg", "rb") as image_file:
             sup = "data:image/png;base64," + base64.b64encode(image_file.read()).decode()
-        with open(self.form.path + "\\Inferior.jpg", "rb") as image_file:
+        with open(self.form.path + "\\I.jpg", "rb") as image_file:
             inf = "data:image/png;base64," + base64.b64encode(image_file.read()).decode()
         temp= {
             "OS": self.form.OS,
@@ -135,8 +135,8 @@ class Report:
             self.display.update()
         print(f'{self.form.path}\\07 - Relatorio de IPR {self.form.tsetup} - {self.form.paciente}.png')
         shutil.move(f"{self.dtemp}\\7.png",f'{self.form.path}\\07 - Relatorio de IPR {self.form.tsetup} - {self.form.paciente}.png')
-        os.remove(f"{self.form.path}\\Superior.jpg")
-        os.remove(f"{self.form.path}\\Inferior.jpg")
+        os.remove(f"{self.form.path}\\S.jpg")
+        os.remove(f"{self.form.path}\\I.jpg")
         self.display.destroy()
         self.pai.renamePart2()
     def Entrys(self,master,txt,x,y):
