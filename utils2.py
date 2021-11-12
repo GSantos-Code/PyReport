@@ -349,6 +349,7 @@ class ConvertSTLs:
                                         os.rename(self.master.path + "\\7.jpg",self.master.path + f"\\07 - Vista Frontal - {self.master.tsetup}.jpg")
                                 except Exception:
                                         pass
+                        self.renamePart2()
         def renamePart2(self):
                 print("Passou")
                 self.lbl["text"]= "Renomeando e convertendo STLs... 20%"
