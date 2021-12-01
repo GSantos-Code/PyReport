@@ -224,6 +224,7 @@ class ConvGIF:
                 self.master= master
                 self.VerifyFiles()
                 self.display.mainloop()
+                self.master.OtSTL()
         def go(self):
                 self.temp.destroy()
         def StatusBar(self, text, value):
