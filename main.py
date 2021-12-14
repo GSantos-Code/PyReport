@@ -110,7 +110,7 @@ class PyReport(utils.auxtools):
         def changepkt(self,valor):
             self.pacote= valor
         def step5(self):
-                options= ["SIX","FULL","ONE","PRO","LITE","Fase II","Fase III","Fase IV","Fase V","Refino I","Refino II","Refino III","Refino IV","Refino V","Refino VI"]
+                options= ["SIX","FULL","ONE","PRO","LITE","CLUB","Fase II","Fase III","Fase IV","Fase V","Refino I","Refino II","Refino III","Refino IV","Refino V","Refino VI"]
                 self.pkt= StringVar(self.i)
                 self.pkt.set("Selecione o pacote")
                 self.sup= self.entrada1.get()
